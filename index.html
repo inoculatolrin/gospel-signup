@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>5/31 主日聚會報名</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+  :root {
+    --green: #06C755; --dark-green: #00B900; --bg: #ebebeb;
+    --white: #ffffff; --text: #1a1a1a; --red: #ff4757;
+    --shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+  .header { width: 100%; max-width: 480px; background: var(--green); padding: 14px 16px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+  .header-icon { width: 40px; height: 40px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .header-name { font-size: 15px; font-weight: 700; color: white; }
+  .header-sub { font-size: 11px; color: rgba(255,255,255,0.85); margin-top: 1px; }
+  .chat { width: 100%; max-width: 480px; padding: 14px 12px 30px; display: flex; flex-direction: column; gap: 12px; }
+  .bot-row { display: flex; align-items: flex-end; gap: 8px; }
+  .bot-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+  .bubble { background: white; border-radius: 18px 18px 18px 4px; padding: 12px 15px; max-width: 80%; box-shadow: var(--shadow); font-size: 14px; line-height: 1.65; color: var(--text); }
+  .event-tag { font-size: 11px; font-weight: 700; color: var(--green); letter-spacing: 1px; margin-bottom: 4px; }
+  .event-title { font-size: 16px; font-weight: 900; color: #111; line-height: 1.4; margin-bottom: 8px; }
+  .event-slogan { font-size: 18px; font-weight: 900; color: var(--dark-green); margin-bottom: 10px; }
+  .event-date { font-size: 12px; color: #666; border-top: 1px solid #eee; padding-top: 8px; }
+  .divider { text-align: center; font-size: 11px; color: #bbb; letter-spacing: 0.5px; }
+  .form-card { background: white; border-radius: 18px; padding: 18px 16px; margin-left: 42px; box-shadow: var(--shadow); }
+  .field { margin-bottom: 14px; }
+  .field:last-child { margin-bottom: 0; }
+  .label { font-size: 12px; font-weight: 700; color: #777; letter-spacing: 0.6px; margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }
+  .req { color: var(--red); font-size: 13px; }
+  .input { width: 100%; border: 1.5px solid #e5e5e5; border-radius: 10px; padding: 10px 13px; font-size: 15px; font-family: 'Noto Sans TC', sans-serif; color: var(--text); background: #fafafa; outline: none; transition: border-color 0.2s, background 0.2s; }
+  .input:focus { border-color: var(--green); background: white; }
+  .input.err { border-color: var(--red); }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip { padding: 7px 14px; border-radius: 20px; border: 1.5px solid #ddd; background: #f5f5f5; font-size: 13px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.15s; color: #555; user-select: none; }
+  .chip:hover { border-color: var(--green); color: var(--green); }
+  .chip.on { background: var(--green); border-color: var(--green); color: white; font-weight: 700; }
+  .chip.err-border { border-color: var(--red); }
+  .guest-section { border: 1.5px solid #eee; border-radius: 12px; padding: 13px 12px; margin-bottom: 10px; background: #fafcfa; }
+  .guest-section:last-of-type { margin-bottom: 0; }
+  .guest-title { font-size: 13px; font-weight: 700; color: var(--dark-green); margin-bottom: 10px; }
+  .meal-opt { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 14px; color: #444; user-select: none; }
+  .meal-opt input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--green); cursor: pointer; }
+  .err-msg { font-size: 11px; color: var(--red); margin-top: 4px; display: none; }
+  .err-msg.show { display: block; }
+  .submit-wrap { margin-left: 42px; }
+  .submit-btn { width: 100%; padding: 14px; background: var(--green); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; transition: background 0.2s, transform 0.15s; box-shadow: 0 3px 12px rgba(6,199,85,0.35); letter-spacing: 0.5px; }
+  .submit-btn:hover { background: var(--dark-green); }
+  .submit-btn:active { transform: scale(0.97); }
+  .submit-btn:disabled { background: #aaa; box-shadow: none; cursor: not-allowed; }
+  .success-card { display: none; flex-direction: column; align-items: center; text-align: center; background: white; border-radius: 20px; padding: 28px 20px; margin-left: 42px; box-shadow: var(--shadow); }
+  .success-card.show { display: flex; animation: pop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+  .success-icon { font-size: 52px; margin-bottom: 10px; }
+  .success-title { font-size: 20px; font-weight: 900; color: var(--dark-green); margin-bottom: 6px; }
+  .success-sub { font-size: 13px; color: #777; margin-bottom: 14px; }
+  .success-detail { font-size: 13px; color: #444; background: #f4fff8; border: 1px solid #c8edd6; border-radius: 10px; padding: 12px 14px; text-align: left; width: 100%; line-height: 1.9; }
+  .success-detail strong { color: #111; }
+  .reset-btn { margin-top: 16px; padding: 10px 26px; border: 2px solid var(--green); background: transparent; color: var(--green); border-radius: 20px; font-size: 14px; font-weight: 700; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; transition: all 0.2s; }
+  .reset-btn:hover { background: var(--green); color: white; }
+  @keyframes pop { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .fade { animation: fadeUp 0.4s ease both; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">⛪</div>
+  <div>
+    <div class="header-name">主日聚會暨青職福音聚會</div>
+    <div class="header-sub">5月31日 · 線上報名系統</div>
+  </div>
+</div>
+
+<div class="chat">
+
+  <div class="bot-row fade">
+    <div class="bot-avatar">⛪</div>
+    <div class="bubble">
+      <div class="event-tag">📢 活動公告</div>
+      <div class="event-title">主日聚會 暨 青職福音聚會</div>
+      <div class="event-slogan">忙、安、來</div>
+      <div class="event-date">📅 2025年5月31日（日）</div>
+    </div>
+  </div>
+
+  <div class="divider">── 報名表 ──</div>
+
+  <div class="form-card fade" id="formCard">
+
+    <div class="field">
+      <div class="label">姓名（邀約人）<span class="req">*</span></div>
+      <input class="input" id="name" type="text" placeholder="請輸入您的姓名" maxlength="20">
+      <div class="err-msg" id="nameErr">請填寫姓名</div>
+    </div>
+
+    <div class="field">
+      <div class="label">區 <span class="req">*</span></div>
+      <div class="chips" id="districtGroup">
+        <div class="chip" data-val="忠孝" onclick="pick(this,'districtGroup','districtErr')">忠孝</div>
+        <div class="chip" data-val="杭州" onclick="pick(this,'districtGroup','districtErr')">杭州</div>
+        <div class="chip" data-val="林森" onclick="pick(this,'districtGroup','districtErr')">林森</div>
+        <div class="chip" data-val="其它" onclick="pick(this,'districtGroup','districtErr')">其它</div>
+      </div>
+      <div class="err-msg" id="districtErr">請選擇區</div>
+    </div>
+
+    <div class="field">
+      <div class="label">受邀人資料</div>
+
+      <div class="guest-section">
+        <div class="guest-title">👤 受邀人一</div>
+        <div class="field" style="margin-bottom:10px">
+          <input class="input" id="g1name" type="text" placeholder="姓名" maxlength="20">
+        </div>
+        <div class="field" style="margin-bottom:10px">
+          <div class="label" style="margin-bottom:5px">年齡</div>
+          <div class="chips" id="g1age">
+            <div class="chip" data-val="青職" onclick="pick(this,'g1age',null)">青職</div>
+            <div class="chip" data-val="壯年" onclick="pick(this,'g1age',null)">壯年</div>
+            <div class="chip" data-val="年長" onclick="pick(this,'g1age',null)">年長</div>
+            <div class="chip" data-val="青少年" onclick="pick(this,'g1age',null)">青少年</div>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <div class="label" style="margin-bottom:5px">用餐</div>
+          <label class="meal-opt"><input type="checkbox" id="g1meal"> 用餐</label>
+        </div>
+      </div>
+
+      <div class="guest-section">
+        <div class="guest-title">👤 受邀人二</div>
+        <div class="field" style="margin-bottom:10px">
+          <input class="input" id="g2name" type="text" placeholder="姓名" maxlength="20">
+        </div>
+        <div class="field" style="margin-bottom:10px">
+          <div class="label" style="margin-bottom:5px">年齡</div>
+          <div class="chips" id="g2age">
+            <div class="chip" data-val="青職" onclick="pick(this,'g2age',null)">青職</div>
+            <div class="chip" data-val="壯年" onclick="pick(this,'g2age',null)">壯年</div>
+            <div class="chip" data-val="年長" onclick="pick(this,'g2age',null)">年長</div>
+            <div class="chip" data-val="青少年" onclick="pick(this,'g2age',null)">青少年</div>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <div class="label" style="margin-bottom:5px">用餐</div>
+          <label class="meal-opt"><input type="checkbox" id="g2meal"> 用餐</label>
+        </div>
+      </div>
+
+      <div class="guest-section">
+        <div class="guest-title">👤 受邀人三</div>
+        <div class="field" style="margin-bottom:10px">
+          <input class="input" id="g3name" type="text" placeholder="姓名" maxlength="20">
+        </div>
+        <div class="field" style="margin-bottom:10px">
+          <div class="label" style="margin-bottom:5px">年齡</div>
+          <div class="chips" id="g3age">
+            <div class="chip" data-val="青職" onclick="pick(this,'g3age',null)">青職</div>
+            <div class="chip" data-val="壯年" onclick="pick(this,'g3age',null)">壯年</div>
+            <div class="chip" data-val="年長" onclick="pick(this,'g3age',null)">年長</div>
+            <div class="chip" data-val="青少年" onclick="pick(this,'g3age',null)">青少年</div>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <div class="label" style="margin-bottom:5px">用餐</div>
+          <label class="meal-opt"><input type="checkbox" id="g3meal"> 用餐</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="field" style="margin-bottom:0">
+      <div class="label">備註</div>
+      <textarea class="input" id="notes" placeholder="（選填）其他說明..." rows="3" style="resize:none;line-height:1.6"></textarea>
+    </div>
+
+  </div>
+
+  <div class="submit-wrap fade" id="submitWrap">
+    <button class="submit-btn" id="submitBtn" onclick="submitForm()">✅ 送出報名</button>
+  </div>
+
+  <div class="success-card" id="successCard">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">報名成功！</div>
+    <div class="success-sub">感謝您報名參加主日福音聚會</div>
+    <div class="success-detail" id="successDetail"></div>
+    <button class="reset-btn" onclick="resetForm()">再填一份</button>
+  </div>
+
+</div>
+
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbySK98XcqOfc75QweLOI0p0dxTHa0cLvus4oZqv09vaSbrRrdKS0QR7B22WYd_yqlERYA/exec';
+  const sel = {};
+
+  function pick(chip, groupId, errId) {
+    document.querySelectorAll('#' + groupId + ' .chip').forEach(c => c.classList.remove('on','err-border'));
+    chip.classList.add('on');
+    sel[groupId] = chip.dataset.val;
+    if (errId) document.getElementById(errId).classList.remove('show');
+  }
+
+  function submitForm() {
+    let valid = true;
+    const name = document.getElementById('name').value.trim();
+    if (!name) {
+      document.getElementById('name').classList.add('err');
+      document.getElementById('nameErr').classList.add('show');
+      valid = false;
+    } else {
+      document.getElementById('name').classList.remove('err');
+      document.getElementById('nameErr').classList.remove('show');
+    }
+    if (!sel['districtGroup']) {
+      document.getElementById('districtErr').classList.add('show');
+      document.querySelectorAll('#districtGroup .chip').forEach(c => c.classList.add('err-border'));
+      valid = false;
+    }
+    if (!valid) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '送出中…';
+
+    const payload = {
+      name,
+      district: sel['districtGroup'] || '',
+      guest1name: document.getElementById('g1name').value.trim(),
+      guest1age: sel['g1age'] || '',
+      guest1meal: document.getElementById('g1meal').checked ? '用餐' : '不用餐',
+      guest2name: document.getElementById('g2name').value.trim(),
+      guest2age: sel['g2age'] || '',
+      guest2meal: document.getElementById('g2meal').checked ? '用餐' : '不用餐',
+      guest3name: document.getElementById('g3name').value.trim(),
+      guest3age: sel['g3age'] || '',
+      guest3meal: document.getElementById('g3meal').checked ? '用餐' : '不用餐',
+      notes: document.getElementById('notes').value.trim()
+    };
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(() => showSuccess(payload)).catch(() => showSuccess(payload));
+  }
+
+  function showSuccess(d) {
+    let html = '<strong>姓名：</strong>' + d.name + '　<strong>區：</strong>' + d.district + '<br>';
+    if (d.guest1name) html += '<strong>受邀人一：</strong>' + d.guest1name + '　' + d.guest1age + '　' + d.guest1meal + '<br>';
+    if (d.guest2name) html += '<strong>受邀人二：</strong>' + d.guest2name + '　' + d.guest2age + '　' + d.guest2meal + '<br>';
+    if (d.guest3name) html += '<strong>受邀人三：</strong>' + d.guest3name + '　' + d.guest3age + '　' + d.guest3meal + '<br>';
+    if (d.notes) html += '<strong>備註：</strong>' + d.notes;
+    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('submitWrap').style.display = 'none';
+    document.getElementById('successDetail').innerHTML = html;
+    document.getElementById('successCard').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetForm() {
+    document.getElementById('name').value = '';
+    document.getElementById('notes').value = '';
+    ['g1name','g2name','g3name'].forEach(id => document.getElementById(id).value = '');
+    ['g1meal','g2meal','g3meal'].forEach(id => document.getElementById(id).checked = false);
+    Object.keys(sel).forEach(k => delete sel[k]);
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('on','err-border'));
+    document.querySelectorAll('.err-msg').forEach(e => e.classList.remove('show'));
+    document.querySelectorAll('.input').forEach(i => i.classList.remove('err'));
+    document.getElementById('formCard').style.display = 'block';
+    document.getElementById('submitWrap').style.display = 'block';
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('submitBtn').textContent = '✅ 送出報名';
+    document.getElementById('successCard').classList.remove('show');
+  }
+
+  document.getElementById('name').addEventListener('input', function() {
+    this.classList.remove('err');
+    document.getElementById('nameErr').classList.remove('show');
+  });
+</script>
+</body>
+</html>
