@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)file:///Users/tonylin/Downloads/gospel-signup_2.html -->
+<!-- saved from url=(0052)file:///Users/tonylin/Downloads/gospel-signup_4.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>5/31 主日聚會報名</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
-  :root {
-    --green: #06C755; --dark-green: #00B900; --bg: #ebebeb;
-    --text: #1a1a1a; --red: #ff4757;
-    --shadow: 0 2px 8px rgba(0,0,0,0.12);
-  }
+  :root { --green: #06C755; --dark-green: #00B900; --bg: #ebebeb; --text: #1a1a1a; --red: #ff4757; --shadow: 0 2px 8px rgba(0,0,0,0.12); }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-size: 17px; }
   .header { width: 100%; max-width: 480px; background: var(--green); padding: 14px 16px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
@@ -43,8 +39,9 @@
   .guest-section { border: 1.5px solid #eee; border-radius: 12px; padding: 14px 13px; margin-bottom: 10px; background: #fafcfa; }
   .guest-section:last-of-type { margin-bottom: 0; }
   .guest-title { font-size: 15px; font-weight: 700; color: var(--dark-green); margin-bottom: 12px; }
-  .meal-opt { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 16px; color: #444; user-select: none; }
-  .meal-opt input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--green); cursor: pointer; }
+  .check-row { display: flex; gap: 20px; flex-wrap: wrap; }
+  .check-opt { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 16px; color: #444; user-select: none; }
+  .check-opt input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--green); cursor: pointer; }
   .err-msg { font-size: 12px; color: var(--red); margin-top: 5px; display: none; }
   .err-msg.show { display: block; }
   .submit-wrap { margin-left: 44px; }
@@ -59,7 +56,12 @@
   .success-sub { font-size: 14px; color: #777; margin-bottom: 14px; }
   .success-detail { font-size: 14px; color: #444; background: #f4fff8; border: 1px solid #c8edd6; border-radius: 10px; padding: 13px 15px; text-align: left; width: 100%; line-height: 2; }
   .success-detail strong { color: #111; }
-  .reset-btn { margin-top: 16px; padding: 11px 28px; border: 2px solid var(--green); background: transparent; color: var(--green); border-radius: 20px; font-size: 15px; font-weight: 700; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; transition: all 0.2s; }
+  .edit-link-box { margin-top: 14px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 10px; padding: 12px 14px; width: 100%; text-align: left; }
+  .edit-link-title { font-size: 12px; font-weight: 700; color: #f59f00; margin-bottom: 6px; }
+  .edit-link { font-size: 12px; color: #1a73e8; word-break: break-all; cursor: pointer; text-decoration: underline; }
+  .copy-btn { margin-top: 8px; padding: 7px 16px; background: #f59f00; color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; }
+  .copy-btn:active { opacity: 0.8; }
+  .reset-btn { margin-top: 14px; padding: 11px 28px; border: 2px solid var(--green); background: transparent; color: var(--green); border-radius: 20px; font-size: 15px; font-weight: 700; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; transition: all 0.2s; }
   .reset-btn:hover { background: var(--green); color: white; }
   @keyframes pop { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -77,7 +79,6 @@
 </div>
 
 <div class="chat">
-
   <div class="bot-row fade">
     <div class="bot-avatar">⛪</div>
     <div class="bubble">
@@ -111,7 +112,7 @@
 
     <div class="field">
       <div class="label">受邀人資料</div>
-
+      <!-- 受邀人一 -->
       <div class="guest-section">
         <div class="guest-title">👤 受邀人一</div>
         <div class="field" style="margin-bottom:12px">
@@ -136,11 +137,14 @@
           </select>
         </div>
         <div class="field" style="margin-bottom:0">
-          <div class="label" style="margin-bottom:6px">用餐</div>
-          <label class="meal-opt"><input type="checkbox" id="g1meal"> 用餐</label>
+          <div class="label" style="margin-bottom:6px">出席 / 用餐</div>
+          <div class="check-row">
+            <label class="check-opt"><input type="checkbox" id="g1attend"> 出席</label>
+            <label class="check-opt"><input type="checkbox" id="g1meal"> 用餐</label>
+          </div>
         </div>
       </div>
-
+      <!-- 受邀人二 -->
       <div class="guest-section">
         <div class="guest-title">👤 受邀人二</div>
         <div class="field" style="margin-bottom:12px">
@@ -165,11 +169,14 @@
           </select>
         </div>
         <div class="field" style="margin-bottom:0">
-          <div class="label" style="margin-bottom:6px">用餐</div>
-          <label class="meal-opt"><input type="checkbox" id="g2meal"> 用餐</label>
+          <div class="label" style="margin-bottom:6px">出席 / 用餐</div>
+          <div class="check-row">
+            <label class="check-opt"><input type="checkbox" id="g2attend"> 出席</label>
+            <label class="check-opt"><input type="checkbox" id="g2meal"> 用餐</label>
+          </div>
         </div>
       </div>
-
+      <!-- 受邀人三 -->
       <div class="guest-section">
         <div class="guest-title">👤 受邀人三</div>
         <div class="field" style="margin-bottom:12px">
@@ -194,8 +201,11 @@
           </select>
         </div>
         <div class="field" style="margin-bottom:0">
-          <div class="label" style="margin-bottom:6px">用餐</div>
-          <label class="meal-opt"><input type="checkbox" id="g3meal"> 用餐</label>
+          <div class="label" style="margin-bottom:6px">出席 / 用餐</div>
+          <div class="check-row">
+            <label class="check-opt"><input type="checkbox" id="g3attend"> 出席</label>
+            <label class="check-opt"><input type="checkbox" id="g3meal"> 用餐</label>
+          </div>
         </div>
       </div>
     </div>
@@ -216,9 +226,13 @@
     <div class="success-title">報名成功！</div>
     <div class="success-sub">感謝您報名參加主日福音聚會</div>
     <div class="success-detail" id="successDetail"></div>
+    <div class="edit-link-box">
+      <div class="edit-link-title">✏️ 需要修改？請複製以下連結</div>
+      <div class="edit-link" id="editLink"></div>
+      <button class="copy-btn" onclick="copyLink()">複製修改連結</button>
+    </div>
     <button class="reset-btn" onclick="resetForm()">再填一份</button>
   </div>
-
 </div>
 
 <script>
@@ -231,6 +245,36 @@
     sel[groupId] = chip.dataset.val;
     if (errId) document.getElementById(errId).classList.remove('show');
   }
+
+  // Load from URL params if editing
+  window.addEventListener('DOMContentLoaded', () => {
+    const p = new URLSearchParams(window.location.search);
+    if (!p.get('name')) return;
+    document.getElementById('name').value = p.get('name') || '';
+    document.getElementById('notes').value = p.get('notes') || '';
+    // district
+    const dc = document.querySelector('#districtGroup .chip[data-val="' + p.get('district') + '"]');
+    if (dc) pick(dc, 'districtGroup', 'districtErr');
+    // guests
+    [1,2,3].forEach(n => {
+      document.getElementById('g'+n+'name').value = p.get('g'+n+'name') || '';
+      document.getElementById('g'+n+'age').value = p.get('g'+n+'age') || '';
+      document.getElementById('g'+n+'attend').checked = p.get('g'+n+'attend') === '1';
+      document.getElementById('g'+n+'meal').checked = p.get('g'+n+'meal') === '1';
+      const tc = document.querySelector('#g'+n+'type .chip[data-val="' + p.get('g'+n+'type') + '"]');
+      if (tc) pick(tc, 'g'+n+'type', null);
+    });
+  });
+
+  function buildParams(d) {
+    return '?name=' + enc(d.name) +
+      '&district=' + enc(d.district) +
+      '&g1name=' + enc(d.guest1name) + '&g1type=' + enc(d.guest1type) + '&g1age=' + enc(d.guest1age) + '&g1attend=' + (d.guest1attend?'1':'0') + '&g1meal=' + (d.guest1meal?'1':'0') +
+      '&g2name=' + enc(d.guest2name) + '&g2type=' + enc(d.guest2type) + '&g2age=' + enc(d.guest2age) + '&g2attend=' + (d.guest2attend?'1':'0') + '&g2meal=' + (d.guest2meal?'1':'0') +
+      '&g3name=' + enc(d.guest3name) + '&g3type=' + enc(d.guest3type) + '&g3age=' + enc(d.guest3age) + '&g3attend=' + (d.guest3attend?'1':'0') + '&g3meal=' + (d.guest3meal?'1':'0') +
+      '&notes=' + enc(d.notes);
+  }
+  function enc(v) { return encodeURIComponent(v||''); }
 
   function submitForm() {
     let valid = true;
@@ -260,15 +304,18 @@
       guest1name: document.getElementById('g1name').value.trim(),
       guest1type: sel['g1type'] || '',
       guest1age: document.getElementById('g1age').value,
-      guest1meal: document.getElementById('g1meal').checked ? '用餐' : '不用餐',
+      guest1attend: document.getElementById('g1attend').checked,
+      guest1meal: document.getElementById('g1meal').checked,
       guest2name: document.getElementById('g2name').value.trim(),
       guest2type: sel['g2type'] || '',
       guest2age: document.getElementById('g2age').value,
-      guest2meal: document.getElementById('g2meal').checked ? '用餐' : '不用餐',
+      guest2attend: document.getElementById('g2attend').checked,
+      guest2meal: document.getElementById('g2meal').checked,
       guest3name: document.getElementById('g3name').value.trim(),
       guest3type: sel['g3type'] || '',
       guest3age: document.getElementById('g3age').value,
-      guest3meal: document.getElementById('g3meal').checked ? '用餐' : '不用餐',
+      guest3attend: document.getElementById('g3attend').checked,
+      guest3meal: document.getElementById('g3meal').checked,
       notes: document.getElementById('notes').value.trim()
     };
 
@@ -282,10 +329,15 @@
 
   function showSuccess(d) {
     let html = '<strong>姓名：</strong>' + d.name + '　<strong>區：</strong>' + d.district + '<br>';
-    if (d.guest1name) html += '<strong>受邀人一：</strong>' + d.guest1name + '　' + (d.guest1type||'') + '　' + d.guest1age + '　' + d.guest1meal + '<br>';
-    if (d.guest2name) html += '<strong>受邀人二：</strong>' + d.guest2name + '　' + (d.guest2type||'') + '　' + d.guest2age + '　' + d.guest2meal + '<br>';
-    if (d.guest3name) html += '<strong>受邀人三：</strong>' + d.guest3name + '　' + (d.guest3type||'') + '　' + d.guest3age + '　' + d.guest3meal + '<br>';
+    if (d.guest1name) html += '<strong>受邀人一：</strong>' + d.guest1name + '　' + (d.guest1type||'') + '　' + d.guest1age + '　' + (d.guest1attend?'出席':'') + '　' + (d.guest1meal?'用餐':'') + '<br>';
+    if (d.guest2name) html += '<strong>受邀人二：</strong>' + d.guest2name + '　' + (d.guest2type||'') + '　' + d.guest2age + '　' + (d.guest2attend?'出席':'') + '　' + (d.guest2meal?'用餐':'') + '<br>';
+    if (d.guest3name) html += '<strong>受邀人三：</strong>' + d.guest3name + '　' + (d.guest3type||'') + '　' + d.guest3age + '　' + (d.guest3attend?'出席':'') + '　' + (d.guest3meal?'用餐':'') + '<br>';
     if (d.notes) html += '<strong>備註：</strong>' + d.notes;
+
+    const editUrl = window.location.origin + window.location.pathname + buildParams(d);
+    document.getElementById('editLink').textContent = editUrl;
+    document.getElementById('editLink').setAttribute('data-url', editUrl);
+
     document.getElementById('formCard').style.display = 'none';
     document.getElementById('submitWrap').style.display = 'none';
     document.getElementById('successDetail').innerHTML = html;
@@ -293,12 +345,33 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  function copyLink() {
+    const url = document.getElementById('editLink').getAttribute('data-url');
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = '✅ 已複製！';
+        setTimeout(() => btn.textContent = '複製修改連結', 2000);
+      });
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = url; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = '✅ 已複製！';
+      setTimeout(() => btn.textContent = '複製修改連結', 2000);
+    }
+  }
+
   function resetForm() {
     document.getElementById('name').value = '';
     document.getElementById('notes').value = '';
-    ['g1name','g2name','g3name'].forEach(id => document.getElementById(id).value = '');
-    ['g1age','g2age','g3age'].forEach(id => document.getElementById(id).value = '');
-    ['g1meal','g2meal','g3meal'].forEach(id => document.getElementById(id).checked = false);
+    [1,2,3].forEach(n => {
+      document.getElementById('g'+n+'name').value = '';
+      document.getElementById('g'+n+'age').value = '';
+      document.getElementById('g'+n+'attend').checked = false;
+      document.getElementById('g'+n+'meal').checked = false;
+    });
     Object.keys(sel).forEach(k => delete sel[k]);
     document.querySelectorAll('.chip').forEach(c => c.classList.remove('on','err-border'));
     document.querySelectorAll('.err-msg').forEach(e => e.classList.remove('show'));
