@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)file:///Users/tonylin/Downloads/gospel-signup_1.html -->
+<!-- saved from url=(0052)file:///Users/tonylin/Downloads/gospel-signup_2.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -101,7 +101,7 @@
     <div class="field">
       <div class="label">區 <span class="req">*</span></div>
       <div class="chips" id="districtGroup">
-        <div class="chip on" data-val="忠孝" onclick="pick(this,&#39;districtGroup&#39;,&#39;districtErr&#39;)">忠孝</div>
+        <div class="chip" data-val="忠孝" onclick="pick(this,&#39;districtGroup&#39;,&#39;districtErr&#39;)">忠孝</div>
         <div class="chip" data-val="杭州" onclick="pick(this,&#39;districtGroup&#39;,&#39;districtErr&#39;)">杭州</div>
         <div class="chip" data-val="林森" onclick="pick(this,&#39;districtGroup&#39;,&#39;districtErr&#39;)">林森</div>
         <div class="chip" data-val="其它" onclick="pick(this,&#39;districtGroup&#39;,&#39;districtErr&#39;)">其它</div>
@@ -116,6 +116,13 @@
         <div class="guest-title">👤 受邀人一</div>
         <div class="field" style="margin-bottom:12px">
           <input class="input" id="g1name" type="text" placeholder="姓名" maxlength="20">
+        </div>
+        <div class="field" style="margin-bottom:12px">
+          <div class="label" style="margin-bottom:6px">身份</div>
+          <div class="chips" id="g1type">
+            <div class="chip" data-val="聖徒" onclick="pick(this,&#39;g1type&#39;,null)">聖徒</div>
+            <div class="chip" data-val="福音朋友" onclick="pick(this,&#39;g1type&#39;,null)">福音朋友</div>
+          </div>
         </div>
         <div class="field" style="margin-bottom:12px">
           <div class="label" style="margin-bottom:6px">年齡</div>
@@ -140,6 +147,13 @@
           <input class="input" id="g2name" type="text" placeholder="姓名" maxlength="20">
         </div>
         <div class="field" style="margin-bottom:12px">
+          <div class="label" style="margin-bottom:6px">身份</div>
+          <div class="chips" id="g2type">
+            <div class="chip" data-val="聖徒" onclick="pick(this,&#39;g2type&#39;,null)">聖徒</div>
+            <div class="chip" data-val="福音朋友" onclick="pick(this,&#39;g2type&#39;,null)">福音朋友</div>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:12px">
           <div class="label" style="margin-bottom:6px">年齡</div>
           <select class="input" id="g2age">
             <option value="">請選擇</option>
@@ -160,6 +174,13 @@
         <div class="guest-title">👤 受邀人三</div>
         <div class="field" style="margin-bottom:12px">
           <input class="input" id="g3name" type="text" placeholder="姓名" maxlength="20">
+        </div>
+        <div class="field" style="margin-bottom:12px">
+          <div class="label" style="margin-bottom:6px">身份</div>
+          <div class="chips" id="g3type">
+            <div class="chip" data-val="聖徒" onclick="pick(this,&#39;g3type&#39;,null)">聖徒</div>
+            <div class="chip" data-val="福音朋友" onclick="pick(this,&#39;g3type&#39;,null)">福音朋友</div>
+          </div>
         </div>
         <div class="field" style="margin-bottom:12px">
           <div class="label" style="margin-bottom:6px">年齡</div>
@@ -237,12 +258,15 @@
       name,
       district: sel['districtGroup'] || '',
       guest1name: document.getElementById('g1name').value.trim(),
+      guest1type: sel['g1type'] || '',
       guest1age: document.getElementById('g1age').value,
       guest1meal: document.getElementById('g1meal').checked ? '用餐' : '不用餐',
       guest2name: document.getElementById('g2name').value.trim(),
+      guest2type: sel['g2type'] || '',
       guest2age: document.getElementById('g2age').value,
       guest2meal: document.getElementById('g2meal').checked ? '用餐' : '不用餐',
       guest3name: document.getElementById('g3name').value.trim(),
+      guest3type: sel['g3type'] || '',
       guest3age: document.getElementById('g3age').value,
       guest3meal: document.getElementById('g3meal').checked ? '用餐' : '不用餐',
       notes: document.getElementById('notes').value.trim()
@@ -258,9 +282,9 @@
 
   function showSuccess(d) {
     let html = '<strong>姓名：</strong>' + d.name + '　<strong>區：</strong>' + d.district + '<br>';
-    if (d.guest1name) html += '<strong>受邀人一：</strong>' + d.guest1name + '　' + d.guest1age + '　' + d.guest1meal + '<br>';
-    if (d.guest2name) html += '<strong>受邀人二：</strong>' + d.guest2name + '　' + d.guest2age + '　' + d.guest2meal + '<br>';
-    if (d.guest3name) html += '<strong>受邀人三：</strong>' + d.guest3name + '　' + d.guest3age + '　' + d.guest3meal + '<br>';
+    if (d.guest1name) html += '<strong>受邀人一：</strong>' + d.guest1name + '　' + (d.guest1type||'') + '　' + d.guest1age + '　' + d.guest1meal + '<br>';
+    if (d.guest2name) html += '<strong>受邀人二：</strong>' + d.guest2name + '　' + (d.guest2type||'') + '　' + d.guest2age + '　' + d.guest2meal + '<br>';
+    if (d.guest3name) html += '<strong>受邀人三：</strong>' + d.guest3name + '　' + (d.guest3type||'') + '　' + d.guest3age + '　' + d.guest3meal + '<br>';
     if (d.notes) html += '<strong>備註：</strong>' + d.notes;
     document.getElementById('formCard').style.display = 'none';
     document.getElementById('submitWrap').style.display = 'none';
