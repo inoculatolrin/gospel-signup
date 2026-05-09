@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)file:///Users/tonylin/Downloads/gospel-signup_4.html -->
+<!-- saved from url=(0052)file:///Users/tonylin/Downloads/gospel-signup_6.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -108,6 +108,14 @@
         <div class="chip" data-val="其它" onclick="pick(this,&#39;districtGroup&#39;,&#39;districtErr&#39;)">其它</div>
       </div>
       <div class="err-msg" id="districtErr">請選擇區</div>
+    </div>
+
+    <div class="field">
+      <div class="label">出席 / 用餐</div>
+      <div class="check-row">
+        <label class="check-opt"><input type="checkbox" id="hostAttend"> 出席</label>
+        <label class="check-opt"><input type="checkbox" id="hostMeal"> 用餐</label>
+      </div>
     </div>
 
     <div class="field">
@@ -252,6 +260,8 @@
     if (!p.get('name')) return;
     document.getElementById('name').value = p.get('name') || '';
     document.getElementById('notes').value = p.get('notes') || '';
+    document.getElementById('hostAttend').checked = p.get('hostAttend') === '1';
+    document.getElementById('hostMeal').checked = p.get('hostMeal') === '1';
     // district
     const dc = document.querySelector('#districtGroup .chip[data-val="' + p.get('district') + '"]');
     if (dc) pick(dc, 'districtGroup', 'districtErr');
@@ -268,7 +278,7 @@
 
   function buildParams(d) {
     return '?name=' + enc(d.name) +
-      '&district=' + enc(d.district) +
+      '&district=' + enc(d.district) + '&hostAttend=' + (d.hostAttend?'1':'0') + '&hostMeal=' + (d.hostMeal?'1':'0') +
       '&g1name=' + enc(d.guest1name) + '&g1type=' + enc(d.guest1type) + '&g1age=' + enc(d.guest1age) + '&g1attend=' + (d.guest1attend?'1':'0') + '&g1meal=' + (d.guest1meal?'1':'0') +
       '&g2name=' + enc(d.guest2name) + '&g2type=' + enc(d.guest2type) + '&g2age=' + enc(d.guest2age) + '&g2attend=' + (d.guest2attend?'1':'0') + '&g2meal=' + (d.guest2meal?'1':'0') +
       '&g3name=' + enc(d.guest3name) + '&g3type=' + enc(d.guest3type) + '&g3age=' + enc(d.guest3age) + '&g3attend=' + (d.guest3attend?'1':'0') + '&g3meal=' + (d.guest3meal?'1':'0') +
@@ -301,6 +311,8 @@
     const payload = {
       name,
       district: sel['districtGroup'] || '',
+      hostAttend: document.getElementById('hostAttend').checked,
+      hostMeal: document.getElementById('hostMeal').checked,
       guest1name: document.getElementById('g1name').value.trim(),
       guest1type: sel['g1type'] || '',
       guest1age: document.getElementById('g1age').value,
@@ -328,7 +340,7 @@
   }
 
   function showSuccess(d) {
-    let html = '<strong>姓名：</strong>' + d.name + '　<strong>區：</strong>' + d.district + '<br>';
+    let html = '<strong>姓名：</strong>' + d.name + '　<strong>區：</strong>' + d.district + '　' + (d.hostAttend?'出席':'') + '　' + (d.hostMeal?'用餐':'') + '<br>';
     if (d.guest1name) html += '<strong>受邀人一：</strong>' + d.guest1name + '　' + (d.guest1type||'') + '　' + d.guest1age + '　' + (d.guest1attend?'出席':'') + '　' + (d.guest1meal?'用餐':'') + '<br>';
     if (d.guest2name) html += '<strong>受邀人二：</strong>' + d.guest2name + '　' + (d.guest2type||'') + '　' + d.guest2age + '　' + (d.guest2attend?'出席':'') + '　' + (d.guest2meal?'用餐':'') + '<br>';
     if (d.guest3name) html += '<strong>受邀人三：</strong>' + d.guest3name + '　' + (d.guest3type||'') + '　' + d.guest3age + '　' + (d.guest3attend?'出席':'') + '　' + (d.guest3meal?'用餐':'') + '<br>';
@@ -366,6 +378,8 @@
   function resetForm() {
     document.getElementById('name').value = '';
     document.getElementById('notes').value = '';
+    document.getElementById('hostAttend').checked = false;
+    document.getElementById('hostMeal').checked = false;
     [1,2,3].forEach(n => {
       document.getElementById('g'+n+'name').value = '';
       document.getElementById('g'+n+'age').value = '';
