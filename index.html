@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)file:///Users/tonylin/Downloads/gospel-signup_6.html -->
+<!-- saved from url=(0052)file:///Users/tonylin/Downloads/gospel-signup_7.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -90,6 +90,15 @@
   </div>
 
   <div class="divider">── 報名表 ──</div>
+
+  <div class="form-card fade" id="queryCard">
+    <div class="label" style="margin-bottom:8px">📋 曾經填過？輸入姓名查詢</div>
+    <div style="display:flex;gap:8px">
+      <input class="input" id="queryName" type="text" placeholder="輸入邀約人姓名" maxlength="20" style="flex:1">
+      <button onclick="queryRecord()" style="padding:10px 16px;background:var(--green);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:&#39;Noto Sans TC&#39;,sans-serif;cursor:pointer;white-space:nowrap">查詢</button>
+    </div>
+    <div id="queryMsg" style="font-size:13px;margin-top:8px;display:none"></div>
+  </div>
 
   <div class="form-card fade" id="formCard">
 
@@ -285,6 +294,43 @@
       '&notes=' + enc(d.notes);
   }
   function enc(v) { return encodeURIComponent(v||''); }
+
+  const QUERY_URL = 'https://script.google.com/macros/s/AKfycbySK98XcqOfc75QweLOI0p0dxTHa0cLvus4oZqv09vaSbrRrdKS0QR7B22WYd_yqlERYA/exec';
+
+  function queryRecord() {
+    const qname = document.getElementById('queryName').value.trim();
+    const msg = document.getElementById('queryMsg');
+    if (!qname) { msg.style.display='block'; msg.style.color='var(--red)'; msg.textContent='請輸入姓名'; return; }
+    msg.style.display='block'; msg.style.color='#999'; msg.textContent='查詢中…';
+    fetch(QUERY_URL + '?name=' + encodeURIComponent(qname))
+      .then(r => r.json())
+      .then(d => {
+        if (d.found) {
+          msg.style.color='var(--green)'; msg.textContent='✅ 找到資料，已帶入表單！';
+          loadData(d);
+        } else {
+          msg.style.color='var(--red)'; msg.textContent='❌ 找不到「' + qname + '」的報名記錄';
+        }
+      })
+      .catch(() => { msg.style.color='var(--red)'; msg.textContent='查詢失敗，請稍後再試'; });
+  }
+
+  function loadData(d) {
+    document.getElementById('name').value = d.name || '';
+    document.getElementById('notes').value = d.notes || '';
+    document.getElementById('hostAttend').checked = d.hostAttend === '出席';
+    document.getElementById('hostMeal').checked = d.hostMeal === '用餐';
+    const dc = document.querySelector('#districtGroup .chip[data-val="' + d.district + '"]');
+    if (dc) pick(dc, 'districtGroup', 'districtErr');
+    [1,2,3].forEach(n => {
+      document.getElementById('g'+n+'name').value = d['guest'+n+'name'] || '';
+      document.getElementById('g'+n+'age').value = d['guest'+n+'age'] || '';
+      document.getElementById('g'+n+'attend').checked = d['guest'+n+'attend'] === '出席';
+      document.getElementById('g'+n+'meal').checked = d['guest'+n+'meal'] === '用餐';
+      const tc = document.querySelector('#g'+n+'type .chip[data-val="' + d['guest'+n+'type'] + '"]');
+      if (tc) pick(tc, 'g'+n+'type', null);
+    });
+  }
 
   function submitForm() {
     let valid = true;
