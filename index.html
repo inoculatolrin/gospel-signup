@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)file:///Users/tonylin/Downloads/gospel-signup_7.html -->
-<html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="zh-TW"><head><meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>5/31 主日聚會報名</title>
+
+<!-- PWA manifest -->
+<link rel="manifest" href="manifest.json">
+
+<!-- iOS Safari PWA settings -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="主日報名">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
+
+<!-- Theme / SEO -->
+<meta name="theme-color" content="#06C755">
+<meta name="description" content="5/31 主日聚會暨青職福音聚會線上報名系統">
+<meta name="mobile-web-app-capable" content="yes">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
   :root { --green: #06C755; --dark-green: #00B900; --bg: #ebebeb; --text: #1a1a1a; --red: #ff4757; --shadow: 0 2px 8px rgba(0,0,0,0.12); }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-size: 17px; }
-  .header { width: 100%; max-width: 480px; background: var(--green); padding: 14px 16px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+  body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-size: 17px; padding-bottom: env(safe-area-inset-bottom); }
+  .header { width: 100%; max-width: 480px; background: var(--green); padding: 14px 16px; padding-top: calc(14px + env(safe-area-inset-top)); display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
   .header-icon { width: 44px; height: 44px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
   .header-name { font-size: 17px; font-weight: 700; color: white; }
   .header-sub { font-size: 13px; color: rgba(255,255,255,0.85); margin-top: 2px; }
@@ -447,6 +462,28 @@
     this.classList.remove('err');
     document.getElementById('nameErr').classList.remove('show');
   });
+
+  // Service Worker registration
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+
+  // iOS install banner (shown only in Safari, not already installed)
+  (function() {
+    const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isInstalled = window.navigator.standalone;
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    const dismissed = sessionStorage.getItem('installBannerDismissed');
+    if (isIos && !isInstalled && isSafari && !dismissed) {
+      const banner = document.createElement('div');
+      banner.id = 'installBanner';
+      banner.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;padding:12px 16px 28px;display:flex;align-items:center;gap:12px;z-index:999;box-shadow:0 -2px 12px rgba(0,0,0,0.12);font-family:Noto Sans TC,sans-serif;';
+      banner.innerHTML = '<div style="font-size:32px">⛪</div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:#111">加入主畫面，隨時快速報名</div><div style="font-size:12px;color:#666;margin-top:2px">點 Safari <strong>分享</strong> 按鈕 → <strong>加入主畫面</strong></div></div><button onclick="sessionStorage.setItem(\'installBannerDismissed\',\'1\');this.closest(\'#installBanner\').remove()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#999;padding:4px">✕</button>';
+      document.body.appendChild(banner);
+    }
+  })();
 </script>
 
 
