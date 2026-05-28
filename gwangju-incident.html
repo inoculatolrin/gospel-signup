@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>光州事件 — 1980 韓國民主化運動時間軸</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: #000;
+      display: flex; align-items: flex-start; justify-content: flex-start;
+    }
+
+    /* ── Slide canvas ── */
+    .slide {
+      width: 1920px; height: 1080px;
+      position: relative; overflow: hidden;
+      background-color: #111111;
+      font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+      transform-origin: top left;
+    }
+
+    /* ── Scanline / newspaper texture ── */
+    .slide::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 90; pointer-events: none;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent 0px, transparent 3px,
+          rgba(255,255,255,0.012) 3px, rgba(255,255,255,0.012) 4px
+        );
+    }
+
+    /* ── Film-grain overlay (SVG feTurbulence) ── */
+    .grain {
+      position: absolute; inset: 0; z-index: 91; pointer-events: none;
+      opacity: 0.06;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+    }
+
+    /* ── Left accent bar ── */
+    .accent-bar {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 5px;
+      background: linear-gradient(to bottom, #7A1F1F 0%, #4a1010 60%, transparent 100%);
+      z-index: 10;
+    }
+
+    /* ── Faint year watermark ── */
+    .year-wm {
+      position: absolute; top: 24px; right: 72px;
+      font-size: 180px; font-weight: 900;
+      color: rgba(122,31,31, 0.07);
+      letter-spacing: -6px; line-height: 1;
+      user-select: none; pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ═══════════════════════════
+       HEADER  (top 20% = 216px)
+    ═══════════════════════════ */
+    .header {
+      position: absolute; top: 0; left: 0; right: 0; height: 210px;
+      padding: 44px 0 36px 76px;
+      border-bottom: 1px solid rgba(122,31,31, 0.55);
+      display: flex; flex-direction: column; justify-content: center;
+      z-index: 5;
+    }
+
+    .main-title {
+      font-size: 70px; font-weight: 900;
+      color: #F5F1E8;
+      letter-spacing: 14px; line-height: 1;
+      text-shadow: 0 2px 32px rgba(122,31,31,0.35);
+    }
+
+    .title-rule {
+      margin: 14px 0 12px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .title-rule-line {
+      width: 100px; height: 2px;
+      background: linear-gradient(to right, #7A1F1F, transparent);
+    }
+    .title-rule-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #7A1F1F;
+    }
+
+    .subtitle {
+      font-size: 19px; font-weight: 500;
+      color: #5B6770;
+      letter-spacing: 7px;
+    }
+
+    /* ═══════════════════════════
+       CONTENT  (below header)
+    ═══════════════════════════ */
+    .content {
+      position: absolute; top: 210px; left: 0; right: 0; bottom: 58px;
+      display: flex;
+    }
+
+    /* ── LEFT: Timeline (55%) ── */
+    .timeline-panel {
+      width: 55%; height: 100%;
+      padding: 42px 50px 42px 76px;
+      position: relative;
+    }
+
+    .tl-wrap {
+      position: relative;
+      padding-left: 108px;
+      height: 100%;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+
+    /* Vertical spine */
+    .tl-spine {
+      position: absolute; left: 36px; top: 6px; bottom: 6px;
+      width: 1px;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%, rgba(245,241,232,0.22) 8%,
+        rgba(245,241,232,0.22) 92%, transparent 100%
+      );
+    }
+
+    .tl-item {
+      position: relative;
+      padding: 2px 0;
+    }
+
+    /* Dot on spine */
+    .tl-dot {
+      position: absolute; left: -78px; top: 6px;
+      width: 10px; height: 10px; border-radius: 50%;
+      border: 2px solid rgba(245,241,232,0.5);
+      background: #111111;
+    }
+    .tl-item.key .tl-dot {
+      background: #7A1F1F;
+      border-color: #F5F1E8;
+      box-shadow: 0 0 10px rgba(122,31,31,0.9), 0 0 20px rgba(122,31,31,0.4);
+      width: 12px; height: 12px; left: -79px; top: 5px;
+    }
+
+    /* Horizontal tick */
+    .tl-tick {
+      position: absolute; left: -68px; top: 11px;
+      width: 32px; height: 1px;
+      background: rgba(245,241,232,0.18);
+    }
+    .tl-item.key .tl-tick { background: rgba(245,241,232,0.35); }
+
+    .tl-date {
+      font-size: 14px; font-weight: 700;
+      color: #5B6770;
+      letter-spacing: 2px; margin-bottom: 2px;
+    }
+    .tl-item.key .tl-date { color: #F5F1E8; font-size: 15px; }
+
+    .tl-event {
+      font-size: 13px; font-weight: 400;
+      color: rgba(245,241,232,0.55);
+      letter-spacing: 1.5px;
+    }
+    .tl-item.key .tl-event {
+      font-size: 14px; font-weight: 500;
+      color: rgba(245,241,232,0.85);
+    }
+
+    /* ── Divider between panels ── */
+    .panel-divider {
+      width: 1px; height: 100%;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%, rgba(122,31,31,0.4) 15%,
+        rgba(122,31,31,0.4) 85%, transparent 100%
+      );
+      flex-shrink: 0;
+    }
+
+    /* ── RIGHT: Image area (45%) ── */
+    .image-panel {
+      flex: 1; height: 100%;
+      position: relative; overflow: hidden;
+    }
+
+    /* Atmospheric cinematic background */
+    .img-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 55% 38%, #2e241a 0%, #1c1510 35%, #0e0b08 70%, #080604 100%);
+    }
+
+    /* Dark overlay (40%) */
+    .img-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.42);
+    }
+
+    /* Bottom vignette */
+    .img-vignette {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,0.7) 100%);
+    }
+
+    /* City skyline + figure silhouettes */
+    .img-scene {
+      position: absolute; left: 0; right: 0; bottom: 100px;
+    }
+
+    /* Caption */
+    .img-caption {
+      position: absolute;
+      bottom: 68px; left: 0; right: 0;
+      text-align: center; padding: 0 60px;
+      z-index: 5;
+    }
+    .img-caption-title {
+      font-size: 21px; font-weight: 700;
+      color: rgba(245,241,232,0.88);
+      letter-spacing: 4px; margin-bottom: 7px;
+    }
+    .img-caption-sub {
+      font-size: 13px; font-weight: 400;
+      color: #5B6770; letter-spacing: 3px;
+    }
+
+    /* Decorative bracket around caption */
+    .bracket {
+      display: inline-block; margin-bottom: 10px;
+      padding: 0 10px;
+      border-left: 1px solid rgba(122,31,31,0.7);
+      border-right: 1px solid rgba(122,31,31,0.7);
+    }
+
+    /* ═══════════════════════════
+       FOOTER
+    ═══════════════════════════ */
+    .footer {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 58px;
+      border-top: 1px solid rgba(122,31,31,0.38);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 5;
+    }
+    .footer-quote {
+      font-size: 14px; font-weight: 400;
+      color: rgba(245,241,232,0.35);
+      letter-spacing: 5px;
+    }
+    .footer-quote mark {
+      background: none;
+      color: rgba(122,31,31,0.85);
+    }
+
+    /* ── Responsive viewport scale ── */
+    @media screen {
+      body { overflow: hidden; }
+    }
+  </style>
+  <script>
+    function scale() {
+      const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      const el = document.querySelector('.slide');
+      el.style.transform = `scale(${s})`;
+      el.style.marginLeft = `${(window.innerWidth  - 1920 * s) / 2}px`;
+      el.style.marginTop  = `${(window.innerHeight - 1080 * s) / 2}px`;
+    }
+    window.addEventListener('DOMContentLoaded', scale);
+    window.addEventListener('resize', scale);
+  </script>
+</head>
+<body>
+<div class="slide">
+
+  <!-- Texture & grain -->
+  <div class="grain"></div>
+
+  <!-- Left accent bar -->
+  <div class="accent-bar"></div>
+
+  <!-- Year watermark -->
+  <div class="year-wm">1980</div>
+
+  <!-- ══ HEADER ══ -->
+  <header class="header">
+    <div class="main-title">光州事件</div>
+    <div class="title-rule">
+      <div class="title-rule-line"></div>
+      <div class="title-rule-dot"></div>
+    </div>
+    <div class="subtitle">1980 韓國民主化運動時間軸</div>
+  </header>
+
+  <!-- ══ CONTENT ══ -->
+  <div class="content">
+
+    <!-- LEFT: Timeline -->
+    <div class="timeline-panel">
+      <div class="tl-wrap">
+        <div class="tl-spine"></div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div><div class="tl-tick"></div>
+          <div class="tl-date">1979.10.26</div>
+          <div class="tl-event">二六事件（朴正熙遇刺）</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div><div class="tl-tick"></div>
+          <div class="tl-date">1979.12.12</div>
+          <div class="tl-event">雙十二政變</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div><div class="tl-tick"></div>
+          <div class="tl-date">1980.05.14 – 16</div>
+          <div class="tl-event">漢城之春大遊行</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div><div class="tl-tick"></div>
+          <div class="tl-date">1980.05.17</div>
+          <div class="tl-event">五一七擴大戒嚴</div>
+        </div>
+
+        <div class="tl-item key">
+          <div class="tl-dot"></div><div class="tl-tick"></div>
+          <div class="tl-date">1980.05.18</div>
+          <div class="tl-event">光州民主化運動爆發</div>
+        </div>
+
+        <div class="tl-item key">
+          <div class="tl-dot"></div><div class="tl-tick"></div>
+          <div class="tl-date">1980.05.21</div>
+          <div class="tl-event">全羅南道廳前開槍</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div><div class="tl-tick"></div>
+          <div class="tl-date">1980.05.22 – 26</div>
+          <div class="tl-event">光州短暫自治</div>
+        </div>
+
+        <div class="tl-item key">
+          <div class="tl-dot"></div><div class="tl-tick"></div>
+          <div class="tl-date">1980.05.27</div>
+          <div class="tl-event">尚武忠正作戰</div>
+        </div>
+
+      </div>
+    </div><!-- /timeline-panel -->
+
+    <!-- Divider -->
+    <div class="panel-divider"></div>
+
+    <!-- RIGHT: Image -->
+    <div class="image-panel">
+      <div class="img-bg"></div>
+
+      <!-- SVG scene: city skyline + crowd + taxi silhouettes -->
+      <svg class="img-scene" viewBox="0 0 864 320" xmlns="http://www.w3.org/2000/svg"
+           style="position:absolute;left:0;right:0;bottom:95px;width:100%;">
+        <defs>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0e0b08" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#080604" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Buildings -->
+        <g fill="#0b0907" opacity="0.9">
+          <rect x="0"   y="130" width="55"  height="190"/>
+          <rect x="12"  y="100" width="18"  height="30"/>
+          <rect x="60"  y="80"  width="70"  height="240"/>
+          <rect x="75"  y="55"  width="16"  height="25"/>
+          <rect x="80"  y="40"  width="6"   height="15"/>  <!-- antenna -->
+          <rect x="135" y="110" width="45"  height="210"/>
+          <rect x="140" y="88"  width="14"  height="22"/>
+          <rect x="185" y="95"  width="55"  height="225"/>
+          <rect x="195" y="65"  width="18"  height="30"/>
+          <rect x="245" y="75"  width="65"  height="245"/>
+          <rect x="260" y="48"  width="22"  height="27"/>
+          <rect x="265" y="36"  width="8"   height="12"/>
+          <rect x="315" y="120" width="40"  height="200"/>
+          <rect x="360" y="90"  width="50"  height="230"/>
+          <rect x="370" y="62"  width="20"  height="28"/>
+          <rect x="415" y="100" width="42"  height="220"/>
+          <rect x="462" y="82"  width="58"  height="238"/>
+          <rect x="472" y="55"  width="20"  height="27"/>
+          <rect x="525" y="115" width="40"  height="205"/>
+          <rect x="570" y="78"  width="62"  height="242"/>
+          <rect x="578" y="50"  width="22"  height="28"/>
+          <rect x="583" y="38"  width="8"   height="12"/>
+          <rect x="637" y="105" width="48"  height="215"/>
+          <rect x="690" y="88"  width="54"  height="232"/>
+          <rect x="700" y="60"  width="18"  height="28"/>
+          <rect x="749" y="118" width="42"  height="202"/>
+          <rect x="796" y="80"  width="68"  height="240"/>
+          <rect x="806" y="52"  width="24"  height="28"/>
+          <rect x="811" y="40"  width="8"   height="12"/>
+        </g>
+
+        <!-- Windows (faint yellow glow) -->
+        <g fill="rgba(255,220,130,0.12)">
+          <rect x="65"  y="95"  width="4" height="5"/>
+          <rect x="75"  y="108" width="4" height="5"/>
+          <rect x="85"  y="120" width="4" height="5"/>
+          <rect x="195" y="80"  width="4" height="5"/>
+          <rect x="210" y="95"  width="4" height="5"/>
+          <rect x="255" y="90"  width="4" height="5"/>
+          <rect x="270" y="110" width="4" height="5"/>
+          <rect x="365" y="95"  width="4" height="5"/>
+          <rect x="380" y="115" width="4" height="5"/>
+          <rect x="472" y="68"  width="4" height="5"/>
+          <rect x="485" y="80"  width="4" height="5"/>
+          <rect x="575" y="62"  width="4" height="5"/>
+          <rect x="588" y="78"  width="4" height="5"/>
+          <rect x="700" y="72"  width="4" height="5"/>
+          <rect x="712" y="88"  width="4" height="5"/>
+          <rect x="808" y="64"  width="4" height="5"/>
+        </g>
+
+        <!-- Road / ground -->
+        <rect x="0" y="280" width="864" height="40" fill="#0a0806"/>
+
+        <!-- Taxi silhouette -->
+        <g transform="translate(90, 238)" fill="#0e0b09">
+          <rect x="10" y="14" width="90" height="34" rx="3"/>
+          <rect x="22" y="4"  width="56" height="18" rx="2"/>
+          <circle cx="22" cy="50" r="9" fill="#080604"/>
+          <circle cx="22" cy="50" r="5" fill="#0e0b09"/>
+          <circle cx="80" cy="50" r="9" fill="#080604"/>
+          <circle cx="80" cy="50" r="5" fill="#0e0b09"/>
+          <!-- Headlights -->
+          <rect x="98" y="22" width="6" height="4" fill="rgba(255,240,180,0.25)" rx="1"/>
+        </g>
+
+        <!-- Crowd silhouettes (marching figures) -->
+        <g fill="#0c0a08">
+          <!-- Row of figures -->
+          <g transform="translate(260,230)">
+            <ellipse cx="0"  cy="0"  rx="5"  ry="7"/>  <rect x="-4"  y="7"  width="8"  height="18"/>
+            <ellipse cx="22" cy="0"  rx="5"  ry="7"/>  <rect x="18"  y="7"  width="8"  height="18"/>
+            <ellipse cx="44" cy="-2" rx="5"  ry="7"/>  <rect x="40"  y="5"  width="8"  height="18"/>
+            <ellipse cx="66" cy="0"  rx="5"  ry="7"/>  <rect x="62"  y="7"  width="8"  height="18"/>
+            <ellipse cx="88" cy="1"  rx="5"  ry="7"/>  <rect x="84"  y="8"  width="8"  height="18"/>
+            <ellipse cx="110" cy="0" rx="5"  ry="7"/>  <rect x="106" y="7"  width="8"  height="18"/>
+            <ellipse cx="132" cy="-1" rx="5" ry="7"/>  <rect x="128" y="6"  width="8"  height="18"/>
+            <ellipse cx="154" cy="0" rx="5"  ry="7"/>  <rect x="150" y="7"  width="8"  height="18"/>
+            <ellipse cx="176" cy="2" rx="5"  ry="7"/>  <rect x="172" y="9"  width="8"  height="18"/>
+            <ellipse cx="198" cy="0" rx="5"  ry="7"/>  <rect x="194" y="7"  width="8"  height="18"/>
+            <ellipse cx="220" cy="-1" rx="5" ry="7"/>  <rect x="216" y="6"  width="8"  height="18"/>
+            <ellipse cx="242" cy="0" rx="5"  ry="7"/>  <rect x="238" y="7"  width="8"  height="18"/>
+          </g>
+
+          <!-- Second smaller row further back -->
+          <g transform="translate(300,210)" opacity="0.6">
+            <ellipse cx="0"  cy="0" rx="4" ry="5"/><rect x="-3"  y="5"  width="6" height="14"/>
+            <ellipse cx="18" cy="0" rx="4" ry="5"/><rect x="15"  y="5"  width="6" height="14"/>
+            <ellipse cx="36" cy="0" rx="4" ry="5"/><rect x="33"  y="5"  width="6" height="14"/>
+            <ellipse cx="54" cy="0" rx="4" ry="5"/><rect x="51"  y="5"  width="6" height="14"/>
+            <ellipse cx="72" cy="0" rx="4" ry="5"/><rect x="69"  y="5"  width="6" height="14"/>
+            <ellipse cx="90" cy="0" rx="4" ry="5"/><rect x="87"  y="5"  width="6" height="14"/>
+            <ellipse cx="108" cy="0" rx="4" ry="5"/><rect x="105" y="5"  width="6" height="14"/>
+            <ellipse cx="126" cy="0" rx="4" ry="5"/><rect x="123" y="5"  width="6" height="14"/>
+            <ellipse cx="144" cy="0" rx="4" ry="5"/><rect x="141" y="5"  width="6" height="14"/>
+            <ellipse cx="162" cy="0" rx="4" ry="5"/><rect x="159" y="5"  width="6" height="14"/>
+            <ellipse cx="180" cy="0" rx="4" ry="5"/><rect x="177" y="5"  width="6" height="14"/>
+          </g>
+
+          <!-- Raised fist -->
+          <g transform="translate(482,224)">
+            <ellipse cx="0" cy="0" rx="5" ry="7"/>
+            <rect x="-4" y="7" width="8" height="20"/>
+            <!-- Arm raised -->
+            <line x1="0" y1="12" x2="-8" y2="-4" stroke="#0c0a08" stroke-width="5"/>
+            <ellipse cx="-8" cy="-7" rx="4" ry="4"/>
+          </g>
+        </g>
+
+        <!-- Gradient cap over buildings -->
+        <rect x="0" y="0" width="864" height="140" fill="url(#skyGrad)"/>
+      </svg>
+
+      <div class="img-overlay"></div>
+      <div class="img-vignette"></div>
+
+      <div class="img-caption">
+        <div class="bracket">
+          <div class="img-caption-title">《我只是個計程車司機》</div>
+        </div>
+        <div class="img-caption-sub">A Taxi Driver &nbsp;｜&nbsp; 韓國電影（2017）</div>
+      </div>
+    </div><!-- /image-panel -->
+
+  </div><!-- /content -->
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer">
+    <div class="footer-quote">
+      「民主並非憑空而來，而是有人曾為它&nbsp;<mark>流血</mark>。」
+    </div>
+  </footer>
+
+</div><!-- /slide -->
+</body>
+</html>
