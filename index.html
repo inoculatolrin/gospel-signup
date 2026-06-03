@@ -84,7 +84,7 @@
     <div class="bubble">
       <div class="event-tag">📢 活動公告</div>
       <div class="event-title" id="eventTitle">數算主恩聚會</div>
-      <div class="event-slogan" id="eventSlogan">回家</div>
+      <div class="event-slogan" id="eventSlogan" style="display:none"></div>
       <div class="event-date" id="eventDate">📅 2026年6月21日（日）</div>
       <div class="event-date" id="eventLocation" style="display:none">📍 </div>
       <div class="event-date" id="eventTime" style="display:none">🕐 </div>
@@ -389,6 +389,10 @@
       </div>
     </div>
 
+    <div class="field">
+      <div class="label">預計帶的菜</div>
+      <input class="input" id="dish" type="text" placeholder="（選填）例：炲飯、水果..." maxlength="50">
+    </div>
     <div class="field" style="margin-bottom:0">
       <div class="label">備註</div>
       <textarea class="input" id="notes" placeholder="（選填）其他說明..." rows="3" style="resize:none;line-height:1.6"></textarea>
@@ -561,7 +565,8 @@
       guest3age: document.getElementById('g8age').value,
       guest3attend: document.getElementById('g8attend').checked,
       guest3meal: document.getElementById('g8meal').checked,
-      notes: document.getElementById('notes').value.trim()
+      dish: document.getElementById('dish').value.trim(),
+        notes: document.getElementById('notes').value.trim()
     };
 
     fetch(SCRIPT_URL, {
@@ -582,6 +587,7 @@
     if (d.guest6name) html += '<strong>受邀人三：</strong>' + d.guest6name + '　' + (d.guest6type||'') + '　' + d.guest6age + '　' + (d.guest6attend?'出席':'') + '　' + (d.guest6meal?'用餐':'') + '<br>';
     if (d.guest7name) html += '<strong>受邀人三：</strong>' + d.guest7name + '　' + (d.guest7type||'') + '　' + d.guest7age + '　' + (d.guest7attend?'出席':'') + '　' + (d.guest7meal?'用餐':'') + '<br>';
     if (d.guest8name) html += '<strong>受邀人三：</strong>' + d.guest8name + '　' + (d.guest8type||'') + '　' + d.guest8age + '　' + (d.guest8attend?'出席':'') + '　' + (d.guest8meal?'用餐':'') + '<br>';
+    if (d.dish) html += '<strong>預計帶的菜：</strong>' + d.dish + '<br>';
     if (d.notes) html += '<strong>備註：</strong>' + d.notes;
 
     const editUrl = window.location.origin + window.location.pathname + buildParams(d);
@@ -615,6 +621,7 @@
 
   function resetForm() {
     document.getElementById('name').value = '';
+    document.getElementById('dish').value = '';
     document.getElementById('notes').value = '';
     document.getElementById('hostAttend').checked = false;
     document.getElementById('hostMeal').checked = false;
@@ -657,10 +664,15 @@
         const et = document.getElementById('eventTitle');
         if (et) et.textContent = info.name;
       }
-      if (info.slogan) {
-        const es = document.getElementById('eventSlogan');
-        if (es) es.textContent = info.slogan;
-      }
+      const es = document.getElementById('eventSlogan');
+        if (es) {
+          if (info.slogan) {
+            es.textContent = info.slogan;
+            es.style.display = '';
+          } else {
+            es.style.display = 'none';
+          }
+        }
       if (info.fullDate) {
         const ed = document.getElementById('eventDate');
         if (ed) ed.textContent = '📅 ' + info.fullDate;
