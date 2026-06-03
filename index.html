@@ -73,8 +73,8 @@
 <div class="header">
   <div class="header-icon">⛪</div>
   <div>
-    <div class="header-name">數算主恩聚會</div>
-    <div class="header-sub">6月21日 · 線上報名系統</div>
+    <div class="header-name" id="headerName">數算主恩聚會</div>
+    <div class="header-sub" id="headerSub">6月21日 · 線上報名系統</div>
   </div>
 </div>
 
@@ -83,9 +83,11 @@
     <div class="bot-avatar">⛪</div>
     <div class="bubble">
       <div class="event-tag">📢 活動公告</div>
-      <div class="event-title">數算主恩聚會</div>
-      <div class="event-slogan">回家</div>
-      <div class="event-date">📅 2026年6月21日（日）</div>
+      <div class="event-title" id="eventTitle">數算主恩聚會</div>
+      <div class="event-slogan" id="eventSlogan">回家</div>
+      <div class="event-date" id="eventDate">📅 2026年6月21日（日）</div>
+      <div class="event-date" id="eventLocation" style="display:none">📍 </div>
+      <div class="event-date" id="eventTime" style="display:none">🕐 </div>
     </div>
   </div>
 
@@ -640,4 +642,43 @@
 </script>
 
 
+
+<script>
+// 動態載入活動資訊 from Google Apps Script Web App
+(function() {
+  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbySK98XcqOfc75QweLOI0p0dxTHa0cLvus4oZqv09vaSbrRrdKS0QR7B22WYd_yqlERYA/exec';
+  fetch(WEB_APP_URL + '?action=eventInfo')
+    .then(r => r.json())
+    .then(info => {
+      if (info.name) {
+        document.title = info.name + ' 報名';
+        const hn = document.getElementById('headerName');
+        if (hn) hn.textContent = info.name;
+        const et = document.getElementById('eventTitle');
+        if (et) et.textContent = info.name;
+      }
+      if (info.slogan) {
+        const es = document.getElementById('eventSlogan');
+        if (es) es.textContent = info.slogan;
+      }
+      if (info.fullDate) {
+        const ed = document.getElementById('eventDate');
+        if (ed) ed.textContent = '📅 ' + info.fullDate;
+        const hs = document.getElementById('headerSub');
+        // Extract month-day from fullDate (e.g. "2026年6月21日（日）" → "6月21日")
+        const m = info.fullDate.match(/(d+月d+日)/);
+        if (hs && m) hs.textContent = m[1] + ' · 線上報名系統';
+      }
+      if (info.location) {
+        const el = document.getElementById('eventLocation');
+        if (el) { el.textContent = '📍 ' + info.location; el.style.display = ''; }
+      }
+      if (info.time) {
+        const etm = document.getElementById('eventTime');
+        if (etm) { etm.textContent = '🕐 ' + info.time; etm.style.display = ''; }
+      }
+    })
+    .catch(() => { /* 若載入失敗，保留預設內容 */ });
+})();
+</script>
 </body></html>
