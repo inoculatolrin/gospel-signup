@@ -255,12 +255,23 @@ function fillGuests(guests) {
   const needed = Math.max(1, guests.length);
   ensureGuestCount(needed);
 
+  // 回填邀約人的區（取第一位受邀人的 district）
+  if (guests.length > 0 && guests[0].district) {
+    const dc = document.querySelector('#districtGroup .chip[data-val="' + guests[0].district + '"]');
+    if (dc) pick(dc, 'districtGroup', 'districtErr');
+  }
+
   guests.forEach((g, i) => {
     const n = i + 1;
     const nameEl = document.getElementById('g' + n + 'name');
     const ageEl  = document.getElementById('g' + n + 'age');
     if (nameEl) nameEl.value = g.name || '';
     if (ageEl && g.age) ageEl.value = g.age;
+    // 回填身份 chip
+    if (g.type) {
+      const tc = document.querySelector('#g' + n + 'type .chip[data-val="' + g.type + '"]');
+      if (tc) pick(tc, 'g' + n + 'type', null);
+    }
   });
 }
 
