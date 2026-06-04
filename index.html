@@ -477,13 +477,27 @@ function resetForm() {
 
 // ── 邀約人自動完成 ────────────────────────────────────────
 
-let inviterCache = null; // 頁面載入時預抓，之後前端過濾
+let inviterCache = null;  // 邀約人名單快取
+const guestCache = {};    // 受邀人快取 { 邀約人名: [{name,age}] }
 
 function preloadInviterList() {
   fetch(SCRIPT_URL + '?action=inviterList&query=')
     .then(r => r.json())
-    .then(d => { inviterCache = d.list || []; })
+    .then(d => {
+      inviterCache = d.list || [];
+      // 頁面載入後背景並行預載所有邀約人的受邀名單
+      preloadAllGuests(inviterCache);
+    })
     .catch(() => { inviterCache = []; });
+}
+
+function preloadAllGuests(names) {
+  names.forEach(name => {
+    fetch(SCRIPT_URL + '?action=guestsByInviter&inviter=' + encodeURIComponent(name))
+      .then(r => r.json())
+      .then(d => { guestCache[name] = d.guests || []; })
+      .catch(() => { guestCache[name] = []; });
+  });
 }
 
 function onInviterInput(val) {
@@ -543,10 +557,19 @@ function hideDropdownDelay() { setTimeout(hideDropdown, 200); }
 function selectInviter(name) {
   document.getElementById('name').value = name;
   hideDropdown();
-  fetch(SCRIPT_URL + '?action=guestsByInviter&inviter=' + encodeURIComponent(name))
-    .then(r => r.json())
-    .then(d => fillGuests(d.guests || []))
-    .catch(() => {});
+  if (guestCache[name] !== undefined) {
+    // 快取命中，即時顯示
+    fillGuests(guestCache[name]);
+  } else {
+    // 快取尚未備妥（通常在頁面剛載入幾秒內），fallback 到 API
+    fetch(SCRIPT_URL + '?action=guestsByInviter&inviter=' + encodeURIComponent(name))
+      .then(r => r.json())
+      .then(d => {
+        guestCache[name] = d.guests || [];
+        fillGuests(guestCache[name]);
+      })
+      .catch(() => {});
+  }
 }
 
 function addAndSelectInviter(name) {
