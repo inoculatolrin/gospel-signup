@@ -1,72 +1,73 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)file:///Users/tonylin/Downloads/gospel-signup_7.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>6/21 數算主恩聚會報名</title>
+<title>數算主恩聚會報名</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
-  :root { --green: #06C755; --dark-green: #00B900; --bg: #ebebeb; --text: #1a1a1a; --red: #ff4757; --shadow: 0 2px 8px rgba(0,0,0,0.12); }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-size: 17px; }
-  .header { width: 100%; max-width: 480px; background: var(--green); padding: 14px 16px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
-  .header-icon { width: 44px; height: 44px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-  .header-name { font-size: 17px; font-weight: 700; color: white; }
-  .header-sub { font-size: 13px; color: rgba(255,255,255,0.85); margin-top: 2px; }
-  .chat { width: 100%; max-width: 480px; padding: 14px 12px 30px; display: flex; flex-direction: column; gap: 12px; }
-  .bot-row { display: flex; align-items: flex-end; gap: 8px; }
-  .bot-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-  .bubble { background: white; border-radius: 18px 18px 18px 4px; padding: 14px 16px; max-width: 82%; box-shadow: var(--shadow); font-size: 15px; line-height: 1.7; color: var(--text); }
-  .event-tag { font-size: 12px; font-weight: 700; color: var(--green); letter-spacing: 1px; margin-bottom: 4px; }
-  .event-title { font-size: 17px; font-weight: 900; color: #111; line-height: 1.4; margin-bottom: 8px; }
-  .event-slogan { font-size: 20px; font-weight: 900; color: var(--dark-green); margin-bottom: 10px; }
-  .event-date { font-size: 13px; color: #666; border-top: 1px solid #eee; padding-top: 8px; }
-  .divider { text-align: center; font-size: 12px; color: #bbb; letter-spacing: 0.5px; }
-  .form-card { background: white; border-radius: 18px; padding: 20px 16px; margin-left: 44px; box-shadow: var(--shadow); }
-  .field { margin-bottom: 16px; }
-  .field:last-child { margin-bottom: 0; }
-  .label { font-size: 13px; font-weight: 700; color: #666; letter-spacing: 0.5px; margin-bottom: 7px; display: flex; align-items: center; gap: 4px; }
-  .req { color: var(--red); font-size: 14px; }
-  .input { width: 100%; border: 1.5px solid #e5e5e5; border-radius: 10px; padding: 12px 14px; font-size: 16px; font-family: 'Noto Sans TC', sans-serif; color: var(--text); background: #fafafa; outline: none; transition: border-color 0.2s, background 0.2s; }
-  .input:focus { border-color: var(--green); background: white; }
-  .input.err { border-color: var(--red); }
-  select.input { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip { padding: 9px 16px; border-radius: 20px; border: 1.5px solid #ddd; background: #f5f5f5; font-size: 15px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.15s; color: #555; user-select: none; }
-  .chip:hover { border-color: var(--green); color: var(--green); }
-  .chip.on { background: var(--green); border-color: var(--green); color: white; font-weight: 700; }
-  .chip.err-border { border-color: var(--red); }
-  .guest-section { border: 1.5px solid #eee; border-radius: 12px; padding: 14px 13px; margin-bottom: 10px; background: #fafcfa; }
-  .guest-section:last-of-type { margin-bottom: 0; }
-  .guest-title { font-size: 15px; font-weight: 700; color: var(--dark-green); margin-bottom: 12px; }
-  .check-row { display: flex; gap: 20px; flex-wrap: wrap; }
-  .check-opt { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 16px; color: #444; user-select: none; }
-  .check-opt input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--green); cursor: pointer; }
-  .err-msg { font-size: 12px; color: var(--red); margin-top: 5px; display: none; }
-  .err-msg.show { display: block; }
-  .submit-wrap { margin-left: 44px; }
-  .submit-btn { width: 100%; padding: 15px; background: var(--green); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; transition: background 0.2s, transform 0.15s; box-shadow: 0 3px 12px rgba(6,199,85,0.35); letter-spacing: 0.5px; }
-  .submit-btn:hover { background: var(--dark-green); }
-  .submit-btn:active { transform: scale(0.97); }
-  .submit-btn:disabled { background: #aaa; box-shadow: none; cursor: not-allowed; }
-  .success-card { display: none; flex-direction: column; align-items: center; text-align: center; background: white; border-radius: 20px; padding: 28px 20px; margin-left: 44px; box-shadow: var(--shadow); }
-  .success-card.show { display: flex; animation: pop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
-  .success-icon { font-size: 56px; margin-bottom: 10px; }
-  .success-title { font-size: 22px; font-weight: 900; color: var(--dark-green); margin-bottom: 6px; }
-  .success-sub { font-size: 14px; color: #777; margin-bottom: 14px; }
-  .success-detail { font-size: 14px; color: #444; background: #f4fff8; border: 1px solid #c8edd6; border-radius: 10px; padding: 13px 15px; text-align: left; width: 100%; line-height: 2; }
-  .success-detail strong { color: #111; }
-  .edit-link-box { margin-top: 14px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 10px; padding: 12px 14px; width: 100%; text-align: left; }
-  .edit-link-title { font-size: 12px; font-weight: 700; color: #f59f00; margin-bottom: 6px; }
-  .edit-link { font-size: 12px; color: #1a73e8; word-break: break-all; cursor: pointer; text-decoration: underline; }
-  .copy-btn { margin-top: 8px; padding: 7px 16px; background: #f59f00; color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; }
-  .copy-btn:active { opacity: 0.8; }
-  .reset-btn { margin-top: 14px; padding: 11px 28px; border: 2px solid var(--green); background: transparent; color: var(--green); border-radius: 20px; font-size: 15px; font-weight: 700; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; transition: all 0.2s; }
-  .reset-btn:hover { background: var(--green); color: white; }
-  @keyframes pop { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  .fade { animation: fadeUp 0.4s ease both; }
-/* === 邀約人自動完成 === */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+:root { --green: #06C755; --dark-green: #00B900; --bg: #ebebeb; --text: #1a1a1a; --red: #ff4757; --shadow: 0 2px 8px rgba(0,0,0,0.12); }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-size: 17px; }
+.header { width: 100%; max-width: 480px; background: var(--green); padding: 14px 16px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+.header-icon { width: 44px; height: 44px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.header-name { font-size: 17px; font-weight: 700; color: white; }
+.header-sub { font-size: 13px; color: rgba(255,255,255,0.85); margin-top: 2px; }
+.chat { width: 100%; max-width: 480px; padding: 14px 12px 30px; display: flex; flex-direction: column; gap: 12px; }
+.bot-row { display: flex; align-items: flex-end; gap: 8px; }
+.bot-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.bubble { background: white; border-radius: 18px 18px 18px 4px; padding: 14px 16px; max-width: 82%; box-shadow: var(--shadow); font-size: 15px; line-height: 1.7; color: var(--text); }
+.event-tag { font-size: 12px; font-weight: 700; color: var(--green); letter-spacing: 1px; margin-bottom: 4px; }
+.event-title { font-size: 17px; font-weight: 900; color: #111; line-height: 1.4; margin-bottom: 8px; }
+.event-slogan { font-size: 20px; font-weight: 900; color: var(--dark-green); margin-bottom: 10px; }
+.event-date { font-size: 13px; color: #666; border-top: 1px solid #eee; padding-top: 8px; }
+.divider { text-align: center; font-size: 12px; color: #bbb; letter-spacing: 0.5px; }
+.form-card { background: white; border-radius: 18px; padding: 20px 16px; margin-left: 44px; box-shadow: var(--shadow); }
+.field { margin-bottom: 16px; }
+.field:last-child { margin-bottom: 0; }
+.label { font-size: 13px; font-weight: 700; color: #666; letter-spacing: 0.5px; margin-bottom: 7px; display: flex; align-items: center; gap: 4px; }
+.req { color: var(--red); font-size: 14px; }
+.input { width: 100%; border: 1.5px solid #e5e5e5; border-radius: 10px; padding: 12px 14px; font-size: 16px; font-family: 'Noto Sans TC', sans-serif; color: var(--text); background: #fafafa; outline: none; transition: border-color 0.2s, background 0.2s; }
+.input:focus { border-color: var(--green); background: white; }
+.input.err { border-color: var(--red); }
+select.input { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 9px 16px; border-radius: 20px; border: 1.5px solid #ddd; background: #f5f5f5; font-size: 15px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.15s; color: #555; user-select: none; }
+.chip:hover { border-color: var(--green); color: var(--green); }
+.chip.on { background: var(--green); border-color: var(--green); color: white; font-weight: 700; }
+.chip.err-border { border-color: var(--red); }
+.guest-section { border: 1.5px solid #eee; border-radius: 12px; padding: 14px 13px; margin-bottom: 10px; background: #fafcfa; }
+.guest-section:last-of-type { margin-bottom: 0; }
+.guest-title { font-size: 15px; font-weight: 700; color: var(--dark-green); margin-bottom: 12px; }
+.check-row { display: flex; gap: 20px; flex-wrap: wrap; }
+.check-opt { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 16px; color: #444; user-select: none; }
+.check-opt input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--green); cursor: pointer; }
+.err-msg { font-size: 12px; color: var(--red); margin-top: 5px; display: none; }
+.err-msg.show { display: block; }
+.add-guest-btn { width: 100%; padding: 11px; border: 2px dashed var(--green); background: transparent; color: var(--green); border-radius: 10px; font-size: 15px; font-weight: 700; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; margin-top: 8px; transition: background 0.15s; }
+.add-guest-btn:hover { background: #f0fff5; }
+.submit-wrap { margin-left: 44px; }
+.submit-btn { width: 100%; padding: 15px; background: var(--green); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; transition: background 0.2s, transform 0.15s; box-shadow: 0 3px 12px rgba(6,199,85,0.35); letter-spacing: 0.5px; }
+.submit-btn:hover { background: var(--dark-green); }
+.submit-btn:active { transform: scale(0.97); }
+.submit-btn:disabled { background: #aaa; box-shadow: none; cursor: not-allowed; }
+.success-card { display: none; flex-direction: column; align-items: center; text-align: center; background: white; border-radius: 20px; padding: 28px 20px; margin-left: 44px; box-shadow: var(--shadow); }
+.success-card.show { display: flex; animation: pop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+.success-icon { font-size: 56px; margin-bottom: 10px; }
+.success-title { font-size: 22px; font-weight: 900; color: var(--dark-green); margin-bottom: 6px; }
+.success-sub { font-size: 14px; color: #777; margin-bottom: 14px; }
+.success-detail { font-size: 14px; color: #444; background: #f4fff8; border: 1px solid #c8edd6; border-radius: 10px; padding: 13px 15px; text-align: left; width: 100%; line-height: 2; }
+.success-detail strong { color: #111; }
+.edit-link-box { margin-top: 14px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 10px; padding: 12px 14px; width: 100%; text-align: left; }
+.edit-link-title { font-size: 12px; font-weight: 700; color: #f59f00; margin-bottom: 6px; }
+.edit-link { font-size: 12px; color: #1a73e8; word-break: break-all; cursor: pointer; text-decoration: underline; }
+.copy-btn { margin-top: 8px; padding: 7px 16px; background: #f59f00; color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; }
+.copy-btn:active { opacity: 0.8; }
+.reset-btn { margin-top: 14px; padding: 11px 28px; border: 2px solid var(--green); background: transparent; color: var(--green); border-radius: 20px; font-size: 15px; font-weight: 700; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; transition: all 0.2s; }
+.reset-btn:hover { background: var(--green); color: white; }
+@keyframes pop { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.fade { animation: fadeUp 0.4s ease both; }
+/* 邀約人自動完成 */
 .ac-wrap { position: relative; }
 .ac-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1.5px solid var(--green); border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); z-index: 200; max-height: 220px; overflow-y: auto; display: none; }
 .ac-dropdown.show { display: block; }
@@ -83,7 +84,7 @@
   <div class="header-icon">⛪</div>
   <div>
     <div class="header-name" id="headerName">數算主恩聚會</div>
-    <div class="header-sub" id="headerSub">6月21日 · 線上報名系統</div>
+    <div class="header-sub" id="headerSub">線上報名系統</div>
   </div>
 </div>
 
@@ -94,45 +95,51 @@
       <div class="event-tag">📢 活動公告</div>
       <div class="event-title" id="eventTitle">數算主恩聚會</div>
       <div class="event-slogan" id="eventSlogan" style="display:none"></div>
-      <div class="event-date" id="eventDate">📅 2026年6月21日（日）</div>
-      <div class="event-date" id="eventLocation" style="display:none">📍 </div>
-      <div class="event-date" id="eventTime" style="display:none">🕐 </div>
+      <div class="event-date" id="eventDate"></div>
+      <div class="event-date" id="eventLocation" style="display:none"></div>
+      <div class="event-date" id="eventTime" style="display:none"></div>
     </div>
   </div>
 
   <div class="divider">── 報名表 ──</div>
 
+  <!-- 查詢舊資料 -->
   <div class="form-card fade" id="queryCard">
     <div class="label" style="margin-bottom:8px">📋 曾經填過？輸入姓名查詢</div>
     <div style="display:flex;gap:8px">
       <input class="input" id="queryName" type="text" placeholder="輸入邀約人姓名" maxlength="20" style="flex:1">
-      <button onclick="queryRecord()" style="padding:10px 16px;background:var(--green);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:&#39;Noto Sans TC&#39;,sans-serif;cursor:pointer;white-space:nowrap">查詢</button>
+      <button onclick="queryRecord()" style="padding:10px 16px;background:var(--green);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:'Noto Sans TC',sans-serif;cursor:pointer;white-space:nowrap">查詢</button>
     </div>
     <div id="queryMsg" style="font-size:13px;margin-top:8px;display:none"></div>
   </div>
 
+  <!-- 主表單 -->
   <div class="form-card fade" id="formCard">
 
+    <!-- 邀約人 -->
     <div class="field">
       <div class="label">姓名（邀約人）<span class="req">*</span></div>
       <div class="ac-wrap">
-  <input class="input" id="name" type="text" placeholder="請輸入您的姓名" maxlength="20" autocomplete="off" oninput="onInviterInput(this.value)" onblur="hideDropdownDelay()">
-  <div class="ac-dropdown" id="acDropdown"></div>
-</div>
+        <input class="input" id="name" type="text" placeholder="請輸入您的姓名" maxlength="20" autocomplete="off"
+          oninput="onInviterInput(this.value)" onblur="hideDropdownDelay()">
+        <div class="ac-dropdown" id="acDropdown"></div>
+      </div>
       <div class="err-msg" id="nameErr">請填寫姓名</div>
     </div>
 
+    <!-- 區 -->
     <div class="field">
       <div class="label">區 <span class="req">*</span></div>
       <div class="chips" id="districtGroup">
-        <div class="chip" data-val="忠孝" onclick="pick(this,&#39;districtGroup&#39;,&#39;districtErr&#39;)">忠孝</div>
-        <div class="chip" data-val="杭州" onclick="pick(this,&#39;districtGroup&#39;,&#39;districtErr&#39;)">杭州</div>
-        <div class="chip" data-val="林森" onclick="pick(this,&#39;districtGroup&#39;,&#39;districtErr&#39;)">林森</div>
-        <div class="chip" data-val="其它" onclick="pick(this,&#39;districtGroup&#39;,&#39;districtErr&#39;)">其它</div>
+        <div class="chip" data-val="忠孝" onclick="pick(this,'districtGroup','districtErr')">忠孝</div>
+        <div class="chip" data-val="杭州" onclick="pick(this,'districtGroup','districtErr')">杭州</div>
+        <div class="chip" data-val="林森" onclick="pick(this,'districtGroup','districtErr')">林森</div>
+        <div class="chip" data-val="其它" onclick="pick(this,'districtGroup','districtErr')">其它</div>
       </div>
       <div class="err-msg" id="districtErr">請選擇區</div>
     </div>
 
+    <!-- 邀約人出席/用餐 -->
     <div class="field">
       <div class="label">出席 / 用餐</div>
       <div class="check-row">
@@ -141,266 +148,14 @@
       </div>
     </div>
 
+    <!-- 受邀人區塊 -->
     <div class="field">
       <div class="label">受邀人資料</div>
-      <!-- 受邀人一 -->
-      <div class="guest-section">
-        <div class="guest-title">👤 受邀人一</div>
-        <div class="field" style="margin-bottom:12px">
-          <input class="input" id="g1name" type="text" placeholder="姓名" maxlength="20">
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">身份</div>
-          <div class="chips" id="g1type">
-            <div class="chip" data-val="聖徒" onclick="pick(this,&#39;g1type&#39;,null)">聖徒</div>
-            <div class="chip" data-val="福音朋友" onclick="pick(this,&#39;g1type&#39;,null)">福音朋友</div>
-          </div>
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">年齡</div>
-          <select class="input" id="g1age">
-            <option value="">請選擇</option>
-            <option value="青職">青職</option>
-            <option value="壯年">壯年</option>
-            <option value="年長">年長</option>
-            <option value="青少年">青少年</option>
-            <option value="大專">大專</option>
-          </select>
-        </div>
-        <div class="field" style="margin-bottom:0">
-          <div class="label" style="margin-bottom:6px">出席 / 用餐</div>
-          <div class="check-row">
-            <label class="check-opt"><input type="checkbox" id="g1attend"> 出席</label>
-            <label class="check-opt"><input type="checkbox" id="g1meal"> 用餐</label>
-          </div>
-        </div>
-      </div>
-      <!-- 受邀人二 -->
-      <div class="guest-section">
-        <div class="guest-title">👤 受邀人二</div>
-        <div class="field" style="margin-bottom:12px">
-          <input class="input" id="g2name" type="text" placeholder="姓名" maxlength="20">
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">身份</div>
-          <div class="chips" id="g2type">
-            <div class="chip" data-val="聖徒" onclick="pick(this,&#39;g2type&#39;,null)">聖徒</div>
-            <div class="chip" data-val="福音朋友" onclick="pick(this,&#39;g2type&#39;,null)">福音朋友</div>
-          </div>
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">年齡</div>
-          <select class="input" id="g2age">
-            <option value="">請選擇</option>
-            <option value="青職">青職</option>
-            <option value="壯年">壯年</option>
-            <option value="年長">年長</option>
-            <option value="青少年">青少年</option>
-            <option value="大專">大專</option>
-          </select>
-        </div>
-        <div class="field" style="margin-bottom:0">
-          <div class="label" style="margin-bottom:6px">出席 / 用餐</div>
-          <div class="check-row">
-            <label class="check-opt"><input type="checkbox" id="g2attend"> 出席</label>
-            <label class="check-opt"><input type="checkbox" id="g2meal"> 用餐</label>
-          </div>
-        </div>
-      </div>
-      <!-- 受邀人三 -->
-      <div class="guest-section">
-        <div class="guest-title">👤 受邀人三</div>
-        <div class="field" style="margin-bottom:12px">
-          <input class="input" id="g3name" type="text" placeholder="姓名" maxlength="20">
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">身份</div>
-          <div class="chips" id="g3type">
-            <div class="chip" data-val="聖徒" onclick="pick(this,&#39;g3type&#39;,null)">聖徒</div>
-            <div class="chip" data-val="福音朋友" onclick="pick(this,&#39;g3type&#39;,null)">福音朋友</div>
-          </div>
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">年齡</div>
-          <select class="input" id="g3age">
-            <option value="">請選擇</option>
-            <option value="青職">青職</option>
-            <option value="壯年">壯年</option>
-            <option value="年長">年長</option>
-            <option value="青少年">青少年</option>
-            <option value="大專">大專</option>
-          </select>
-        </div>
-        <div class="field" style="margin-bottom:0">
-          <div class="label" style="margin-bottom:6px">出席 / 用餐</div>
-          <div class="check-row">
-            <label class="check-opt"><input type="checkbox" id="g3attend"> 出席</label>
-            <label class="check-opt"><input type="checkbox" id="g3meal"> 用餐</label>
-          </div>
-        </div>
-      </div>
-      <!-- 受邀人四 -->
-      <div class="guest-section">
-        <div class="guest-title">👤 受邀人四</div>
-        <div class="field" style="margin-bottom:12px">
-          <input class="input" id="g4name" type="text" placeholder="姓名" maxlength="20">
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">身份</div>
-          <div class="chips" id="g4type">
-            <div class="chip" data-val="聖徒" onclick="pick(this,&#39;g4type&#39;,null)">聖徒</div>
-            <div class="chip" data-val="福音朋友" onclick="pick(this,&#39;g4type&#39;,null)">福音朋友</div>
-          </div>
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">年齡</div>
-          <select class="input" id="g4age">
-            <option value="">請選擇</option>
-            <option value="青職">青職</option>
-            <option value="壯年">壯年</option>
-            <option value="年長">年長</option>
-            <option value="青少年">青少年</option>
-            <option value="大專">大專</option>
-          </select>
-        </div>
-        <div class="field" style="margin-bottom:0">
-          <div class="label" style="margin-bottom:6px">出席 / 用餐</div>
-          <div class="check-row">
-            <label class="check-opt"><input type="checkbox" id="g4attend"> 出席</label>
-            <label class="check-opt"><input type="checkbox" id="g4meal"> 用餐</label>
-          </div>
-        </div>
-      </div>
-      <!-- 受邀人五 -->
-      <div class="guest-section">
-        <div class="guest-title">👤 受邀人五</div>
-        <div class="field" style="margin-bottom:12px">
-          <input class="input" id="g5name" type="text" placeholder="姓名" maxlength="20">
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">身份</div>
-          <div class="chips" id="g5type">
-            <div class="chip" data-val="聖徒" onclick="pick(this,&#39;g5type&#39;,null)">聖徒</div>
-            <div class="chip" data-val="福音朋友" onclick="pick(this,&#39;g5type&#39;,null)">福音朋友</div>
-          </div>
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">年齡</div>
-          <select class="input" id="g5age">
-            <option value="">請選擇</option>
-            <option value="青職">青職</option>
-            <option value="壯年">壯年</option>
-            <option value="年長">年長</option>
-            <option value="青少年">青少年</option>
-            <option value="大專">大專</option>
-          </select>
-        </div>
-        <div class="field" style="margin-bottom:0">
-          <div class="label" style="margin-bottom:6px">出席 / 用餐</div>
-          <div class="check-row">
-            <label class="check-opt"><input type="checkbox" id="g5attend"> 出席</label>
-            <label class="check-opt"><input type="checkbox" id="g5meal"> 用餐</label>
-          </div>
-        </div>
-      </div>
-      <!-- 受邀人六 -->
-      <div class="guest-section">
-        <div class="guest-title">👤 受邀人六</div>
-        <div class="field" style="margin-bottom:12px">
-          <input class="input" id="g6name" type="text" placeholder="姓名" maxlength="20">
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">身份</div>
-          <div class="chips" id="g6type">
-            <div class="chip" data-val="聖徒" onclick="pick(this,&#39;g6type&#39;,null)">聖徒</div>
-            <div class="chip" data-val="福音朋友" onclick="pick(this,&#39;g6type&#39;,null)">福音朋友</div>
-          </div>
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">年齡</div>
-          <select class="input" id="g6age">
-            <option value="">請選擇</option>
-            <option value="青職">青職</option>
-            <option value="壯年">壯年</option>
-            <option value="年長">年長</option>
-            <option value="青少年">青少年</option>
-            <option value="大專">大專</option>
-          </select>
-        </div>
-        <div class="field" style="margin-bottom:0">
-          <div class="label" style="margin-bottom:6px">出席 / 用餐</div>
-          <div class="check-row">
-            <label class="check-opt"><input type="checkbox" id="g6attend"> 出席</label>
-            <label class="check-opt"><input type="checkbox" id="g6meal"> 用餐</label>
-          </div>
-        </div>
-      </div>
-      <!-- 受邀人七 -->
-      <div class="guest-section">
-        <div class="guest-title">👤 受邀人七</div>
-        <div class="field" style="margin-bottom:12px">
-          <input class="input" id="g7name" type="text" placeholder="姓名" maxlength="20">
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">身份</div>
-          <div class="chips" id="g7type">
-            <div class="chip" data-val="聖徒" onclick="pick(this,&#39;g7type&#39;,null)">聖徒</div>
-            <div class="chip" data-val="福音朋友" onclick="pick(this,&#39;g7type&#39;,null)">福音朋友</div>
-          </div>
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">年齡</div>
-          <select class="input" id="g7age">
-            <option value="">請選擇</option>
-            <option value="青職">青職</option>
-            <option value="壯年">壯年</option>
-            <option value="年長">年長</option>
-            <option value="青少年">青少年</option>
-            <option value="大專">大專</option>
-          </select>
-        </div>
-        <div class="field" style="margin-bottom:0">
-          <div class="label" style="margin-bottom:6px">出席 / 用餐</div>
-          <div class="check-row">
-            <label class="check-opt"><input type="checkbox" id="g7attend"> 出席</label>
-            <label class="check-opt"><input type="checkbox" id="g7meal"> 用餐</label>
-          </div>
-        </div>
-      </div>
-      <!-- 受邀人八 -->
-      <div class="guest-section">
-        <div class="guest-title">👤 受邀人八</div>
-        <div class="field" style="margin-bottom:12px">
-          <input class="input" id="g8name" type="text" placeholder="姓名" maxlength="20">
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">身份</div>
-          <div class="chips" id="g8type">
-            <div class="chip" data-val="聖徒" onclick="pick(this,&#39;g8type&#39;,null)">聖徒</div>
-            <div class="chip" data-val="福音朋友" onclick="pick(this,&#39;g8type&#39;,null)">福音朋友</div>
-          </div>
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <div class="label" style="margin-bottom:6px">年齡</div>
-          <select class="input" id="g8age">
-            <option value="">請選擇</option>
-            <option value="青職">青職</option>
-            <option value="壯年">壯年</option>
-            <option value="年長">年長</option>
-            <option value="青少年">青少年</option>
-            <option value="大專">大專</option>
-          </select>
-        </div>
-        <div class="field" style="margin-bottom:0">
-          <div class="label" style="margin-bottom:6px">出席 / 用餐</div>
-          <div class="check-row">
-            <label class="check-opt"><input type="checkbox" id="g8attend"> 出席</label>
-            <label class="check-opt"><input type="checkbox" id="g8meal"> 用餐</label>
-          </div>
-        </div>
-      </div>
+      <div id="guestContainer"></div>
+      <button class="add-guest-btn" onclick="addGuest()">＋ 新增受邀人</button>
     </div>
 
+    <!-- 帶菜/備註 -->
     <div class="field">
       <div class="label">預計帶的菜</div>
       <input class="input" id="dish" type="text" placeholder="（選填）例：炲飯、水果..." maxlength="50">
@@ -431,231 +186,297 @@
 </div>
 
 <script>
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbySK98XcqOfc75QweLOI0p0dxTHa0cLvus4oZqv09vaSbrRrdKS0QR7B22WYd_yqlERYA/exec';
-  const sel = {};
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbySK98XcqOfc75QweLOI0p0dxTHa0cLvus4oZqv09vaSbrRrdKS0QR7B22WYd_yqlERYA/exec';
+const CHINESE_NUMS = ['一','二','三','四','五','六','七','八','九','十','十一','十二','十三','十四','十五','十六','十七','十八','十九','二十'];
 
-  function pick(chip, groupId, errId) {
-    document.querySelectorAll('#' + groupId + ' .chip').forEach(c => c.classList.remove('on','err-border'));
-    chip.classList.add('on');
-    sel[groupId] = chip.dataset.val;
-    if (errId) document.getElementById(errId).classList.remove('show');
+const sel = {};
+let guestCount = 0;
+
+// ── 動態受邀人組 ─────────────────────────────────────────
+
+function guestSectionHTML(n) {
+  const cn = CHINESE_NUMS[n - 1] || String(n);
+  return `
+    <div class="guest-section" id="gs${n}">
+      <div class="guest-title">👤 受邀人${cn}</div>
+      <div class="field" style="margin-bottom:12px">
+        <input class="input" id="g${n}name" type="text" placeholder="姓名" maxlength="20">
+      </div>
+      <div class="field" style="margin-bottom:12px">
+        <div class="label" style="margin-bottom:6px">身份</div>
+        <div class="chips" id="g${n}type">
+          <div class="chip" data-val="聖徒" onclick="pick(this,'g${n}type',null)">聖徒</div>
+          <div class="chip" data-val="福音朋友" onclick="pick(this,'g${n}type',null)">福音朋友</div>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:12px">
+        <div class="label" style="margin-bottom:6px">年齡</div>
+        <select class="input" id="g${n}age">
+          <option value="">請選擇</option>
+          <option value="青職">青職</option>
+          <option value="壯年">壯年</option>
+          <option value="年長">年長</option>
+          <option value="青少年">青少年</option>
+          <option value="大專">大專</option>
+        </select>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <div class="label" style="margin-bottom:6px">出席 / 用餐</div>
+        <div class="check-row">
+          <label class="check-opt"><input type="checkbox" id="g${n}attend"> 出席</label>
+          <label class="check-opt"><input type="checkbox" id="g${n}meal"> 用餐</label>
+        </div>
+      </div>
+    </div>`;
+}
+
+function ensureGuestCount(n) {
+  const container = document.getElementById('guestContainer');
+  while (guestCount < n) {
+    guestCount++;
+    container.insertAdjacentHTML('beforeend', guestSectionHTML(guestCount));
   }
+}
 
-  // Load from URL params if editing
-  window.addEventListener('DOMContentLoaded', () => {
-    const p = new URLSearchParams(window.location.search);
-    if (!p.get('name')) return;
-    document.getElementById('name').value = p.get('name') || '';
-    document.getElementById('notes').value = p.get('notes') || '';
-    document.getElementById('hostAttend').checked = p.get('hostAttend') === '1';
-    document.getElementById('hostMeal').checked = p.get('hostMeal') === '1';
-    // district
-    const dc = document.querySelector('#districtGroup .chip[data-val="' + p.get('district') + '"]');
-    if (dc) pick(dc, 'districtGroup', 'districtErr');
-    // guests
-    [1,2,3].forEach(n => {
-      document.getElementById('g'+n+'name').value = p.get('g'+n+'name') || '';
-      document.getElementById('g'+n+'age').value = p.get('g'+n+'age') || '';
-      document.getElementById('g'+n+'attend').checked = p.get('g'+n+'attend') === '1';
-      document.getElementById('g'+n+'meal').checked = p.get('g'+n+'meal') === '1';
-      const tc = document.querySelector('#g'+n+'type .chip[data-val="' + p.get('g'+n+'type') + '"]');
-      if (tc) pick(tc, 'g'+n+'type', null);
-    });
+function addGuest() {
+  ensureGuestCount(guestCount + 1);
+  const newSection = document.getElementById('gs' + guestCount);
+  if (newSection) newSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function fillGuests(guests) {
+  // Clear existing sections
+  const container = document.getElementById('guestContainer');
+  container.innerHTML = '';
+  guestCount = 0;
+  // Clear sel for guest types
+  Object.keys(sel).forEach(k => { if (k.startsWith('g') && k.endsWith('type')) delete sel[k]; });
+
+  const needed = Math.max(1, guests.length);
+  ensureGuestCount(needed);
+
+  guests.forEach((g, i) => {
+    const n = i + 1;
+    const nameEl = document.getElementById('g' + n + 'name');
+    const ageEl  = document.getElementById('g' + n + 'age');
+    if (nameEl) nameEl.value = g.name || '';
+    if (ageEl && g.age) ageEl.value = g.age;
   });
+}
 
-  function buildParams(d) {
-    return '?name=' + enc(d.name) +
-      '&district=' + enc(d.district) + '&hostAttend=' + (d.hostAttend?'1':'0') + '&hostMeal=' + (d.hostMeal?'1':'0') +
-      '&g1name=' + enc(d.guest1name) + '&g1type=' + enc(d.guest1type) + '&g1age=' + enc(d.guest1age) + '&g1attend=' + (d.guest1attend?'1':'0') + '&g1meal=' + (d.guest1meal?'1':'0') +
-      '&g2name=' + enc(d.guest2name) + '&g2type=' + enc(d.guest2type) + '&g2age=' + enc(d.guest2age) + '&g2attend=' + (d.guest2attend?'1':'0') + '&g2meal=' + (d.guest2meal?'1':'0') +
-      '&g3name=' + enc(d.guest3name) + '&g3type=' + enc(d.guest3type) + '&g3age=' + enc(d.guest3age) + '&g3attend=' + (d.guest3attend?'1':'0') + '&g3meal=' + (d.guest3meal?'1':'0') +
-      '&notes=' + enc(d.notes);
+// ── Chip 選取 ─────────────────────────────────────────────
+
+function pick(chip, groupId, errId) {
+  document.querySelectorAll('#' + groupId + ' .chip').forEach(c => c.classList.remove('on', 'err-border'));
+  chip.classList.add('on');
+  sel[groupId] = chip.dataset.val;
+  if (errId) document.getElementById(errId).classList.remove('show');
+}
+
+// ── 查詢舊資料 ────────────────────────────────────────────
+
+function queryRecord() {
+  const qname = document.getElementById('queryName').value.trim();
+  const msg = document.getElementById('queryMsg');
+  if (!qname) { msg.style.display = 'block'; msg.style.color = 'var(--red)'; msg.textContent = '請輸入姓名'; return; }
+  msg.style.display = 'block'; msg.style.color = '#999'; msg.textContent = '查詢中…';
+  fetch(SCRIPT_URL + '?name=' + encodeURIComponent(qname))
+    .then(r => r.json())
+    .then(d => {
+      if (d.found) {
+        msg.style.color = 'var(--green)'; msg.textContent = '✅ 找到資料，已帶入表單！';
+        loadData(d);
+      } else {
+        msg.style.color = 'var(--red)'; msg.textContent = '❌ 找不到「' + qname + '」的報名記錄';
+      }
+    })
+    .catch(() => { msg.style.color = 'var(--red)'; msg.textContent = '查詢失敗，請稍後再試'; });
+}
+
+function loadData(d) {
+  document.getElementById('name').value  = d.name  || '';
+  document.getElementById('notes').value = d.notes || '';
+  document.getElementById('dish').value  = d.dish  || '';
+  document.getElementById('hostAttend').checked = d.hostAttend === '出席';
+  document.getElementById('hostMeal').checked   = d.hostMeal   === '用餐';
+
+  const dc = document.querySelector('#districtGroup .chip[data-val="' + d.district + '"]');
+  if (dc) pick(dc, 'districtGroup', 'districtErr');
+
+  // Clear and rebuild guest sections
+  const container = document.getElementById('guestContainer');
+  container.innerHTML = '';
+  guestCount = 0;
+  Object.keys(sel).forEach(k => { if (k.startsWith('g') && k.endsWith('type')) delete sel[k]; });
+
+  const count = parseInt(d.guestCount) || 0;
+  ensureGuestCount(Math.max(1, count));
+
+  for (let n = 1; n <= count; n++) {
+    const nameEl   = document.getElementById('g' + n + 'name');
+    const ageEl    = document.getElementById('g' + n + 'age');
+    const attendEl = document.getElementById('g' + n + 'attend');
+    const mealEl   = document.getElementById('g' + n + 'meal');
+    if (nameEl)   nameEl.value   = d['guest' + n + 'name'] || '';
+    if (ageEl)    ageEl.value    = d['guest' + n + 'age']  || '';
+    if (attendEl) attendEl.checked = d['guest' + n + 'attend'] === '出席';
+    if (mealEl)   mealEl.checked   = d['guest' + n + 'meal']   === '用餐';
+    const tc = document.querySelector('#g' + n + 'type .chip[data-val="' + d['guest' + n + 'type'] + '"]');
+    if (tc) pick(tc, 'g' + n + 'type', null);
   }
-  function enc(v) { return encodeURIComponent(v||''); }
+}
 
-  const QUERY_URL = 'https://script.google.com/macros/s/AKfycbySK98XcqOfc75QweLOI0p0dxTHa0cLvus4oZqv09vaSbrRrdKS0QR7B22WYd_yqlERYA/exec';
+// ── 送出表單 ──────────────────────────────────────────────
 
-  function queryRecord() {
-    const qname = document.getElementById('queryName').value.trim();
-    const msg = document.getElementById('queryMsg');
-    if (!qname) { msg.style.display='block'; msg.style.color='var(--red)'; msg.textContent='請輸入姓名'; return; }
-    msg.style.display='block'; msg.style.color='#999'; msg.textContent='查詢中…';
-    fetch(QUERY_URL + '?name=' + encodeURIComponent(qname))
-      .then(r => r.json())
-      .then(d => {
-        if (d.found) {
-          msg.style.color='var(--green)'; msg.textContent='✅ 找到資料，已帶入表單！';
-          loadData(d);
-        } else {
-          msg.style.color='var(--red)'; msg.textContent='❌ 找不到「' + qname + '」的報名記錄';
-        }
-      })
-      .catch(() => { msg.style.color='var(--red)'; msg.textContent='查詢失敗，請稍後再試'; });
+function submitForm() {
+  let valid = true;
+  const name = document.getElementById('name').value.trim();
+  if (!name) {
+    document.getElementById('name').classList.add('err');
+    document.getElementById('nameErr').classList.add('show');
+    valid = false;
+  } else {
+    document.getElementById('name').classList.remove('err');
+    document.getElementById('nameErr').classList.remove('show');
+  }
+  if (!sel['districtGroup']) {
+    document.getElementById('districtErr').classList.add('show');
+    document.querySelectorAll('#districtGroup .chip').forEach(c => c.classList.add('err-border'));
+    valid = false;
+  }
+  if (!valid) return;
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '送出中…';
+
+  const payload = {
+    name,
+    district:    sel['districtGroup'] || '',
+    hostAttend:  document.getElementById('hostAttend').checked,
+    hostMeal:    document.getElementById('hostMeal').checked,
+    dish:        document.getElementById('dish').value.trim(),
+    notes:       document.getElementById('notes').value.trim(),
+    guestCount:  guestCount
+  };
+
+  for (let n = 1; n <= guestCount; n++) {
+    payload['guest' + n + 'name']   = (document.getElementById('g' + n + 'name')?.value || '').trim();
+    payload['guest' + n + 'type']   = sel['g' + n + 'type'] || '';
+    payload['guest' + n + 'age']    = document.getElementById('g' + n + 'age')?.value    || '';
+    payload['guest' + n + 'attend'] = document.getElementById('g' + n + 'attend')?.checked || false;
+    payload['guest' + n + 'meal']   = document.getElementById('g' + n + 'meal')?.checked  || false;
   }
 
-  function loadData(d) {
-    document.getElementById('name').value = d.name || '';
-    document.getElementById('notes').value = d.notes || '';
-    document.getElementById('hostAttend').checked = d.hostAttend === '出席';
-    document.getElementById('hostMeal').checked = d.hostMeal === '用餐';
-    const dc = document.querySelector('#districtGroup .chip[data-val="' + d.district + '"]');
-    if (dc) pick(dc, 'districtGroup', 'districtErr');
-    [1,2,3].forEach(n => {
-      document.getElementById('g'+n+'name').value = d['guest'+n+'name'] || '';
-      document.getElementById('g'+n+'age').value = d['guest'+n+'age'] || '';
-      document.getElementById('g'+n+'attend').checked = d['guest'+n+'attend'] === '出席';
-      document.getElementById('g'+n+'meal').checked = d['guest'+n+'meal'] === '用餐';
-      const tc = document.querySelector('#g'+n+'type .chip[data-val="' + d['guest'+n+'type'] + '"]');
-      if (tc) pick(tc, 'g'+n+'type', null);
-    });
-  }
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(() => showSuccess(payload)).catch(() => showSuccess(payload));
+}
 
-  function submitForm() {
-    let valid = true;
-    const name = document.getElementById('name').value.trim();
-    if (!name) {
-      document.getElementById('name').classList.add('err');
-      document.getElementById('nameErr').classList.add('show');
-      valid = false;
-    } else {
-      document.getElementById('name').classList.remove('err');
-      document.getElementById('nameErr').classList.remove('show');
+// ── 成功畫面 ──────────────────────────────────────────────
+
+function showSuccess(d) {
+  let html = '<strong>姓名：</strong>' + d.name + ' <strong>區：</strong>' + d.district +
+             (d.hostAttend ? ' 出席' : '') + (d.hostMeal ? ' 用餐' : '') + '<br>';
+
+  for (let n = 1; n <= (d.guestCount || 0); n++) {
+    const gname = d['guest' + n + 'name'];
+    if (gname) {
+      const cn = CHINESE_NUMS[n - 1] || String(n);
+      html += '<strong>受邀人' + cn + '：</strong>' + gname +
+              (d['guest' + n + 'type'] ? ' ' + d['guest' + n + 'type'] : '') +
+              (d['guest' + n + 'age']  ? ' ' + d['guest' + n + 'age']  : '') +
+              (d['guest' + n + 'attend'] ? ' 出席' : '') +
+              (d['guest' + n + 'meal']   ? ' 用餐' : '') + '<br>';
     }
-    if (!sel['districtGroup']) {
-      document.getElementById('districtErr').classList.add('show');
-      document.querySelectorAll('#districtGroup .chip').forEach(c => c.classList.add('err-border'));
-      valid = false;
-    }
-    if (!valid) return;
-
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = '送出中…';
-
-    const payload = {
-      name,
-      district: sel['districtGroup'] || '',
-      hostAttend: document.getElementById('hostAttend').checked,
-      hostMeal: document.getElementById('hostMeal').checked,
-      guest1name: document.getElementById('g1name').value.trim(),
-      guest1type: sel['g1type'] || '',
-      guest1age: document.getElementById('g1age').value,
-      guest1attend: document.getElementById('g1attend').checked,
-      guest1meal: document.getElementById('g1meal').checked,
-      guest2name: document.getElementById('g2name').value.trim(),
-      guest2type: sel['g2type'] || '',
-      guest2age: document.getElementById('g2age').value,
-      guest2attend: document.getElementById('g2attend').checked,
-      guest2meal: document.getElementById('g2meal').checked,
-      guest3name: document.getElementById('g3name').value.trim(),
-      guest3type: sel['g3type'] || '',
-      guest3age: document.getElementById('g3age').value,
-      guest3attend: document.getElementById('g3attend').checked,
-      guest3meal: document.getElementById('g3meal').checked,
-      guest3name: document.getElementById('g4name').value.trim(),
-      guest3type: sel['g4type'] || '',
-      guest3age: document.getElementById('g4age').value,
-      guest3attend: document.getElementById('g4attend').checked,
-      guest3meal: document.getElementById('g4meal').checked,
-      guest3name: document.getElementById('g5name').value.trim(),
-      guest3type: sel['g5type'] || '',
-      guest3age: document.getElementById('g5age').value,
-      guest3attend: document.getElementById('g5attend').checked,
-      guest3meal: document.getElementById('g5meal').checked,
-      guest3name: document.getElementById('g6name').value.trim(),
-      guest3type: sel['g6type'] || '',
-      guest3age: document.getElementById('g6age').value,
-      guest3attend: document.getElementById('g6attend').checked,
-      guest3meal: document.getElementById('g6meal').checked,
-      guest3name: document.getElementById('g7name').value.trim(),
-      guest3type: sel['g7type'] || '',
-      guest3age: document.getElementById('g7age').value,
-      guest3attend: document.getElementById('g7attend').checked,
-      guest3meal: document.getElementById('g7meal').checked,
-      guest3name: document.getElementById('g8name').value.trim(),
-      guest3type: sel['g8type'] || '',
-      guest3age: document.getElementById('g8age').value,
-      guest3attend: document.getElementById('g8attend').checked,
-      guest3meal: document.getElementById('g8meal').checked,
-      dish: document.getElementById('dish').value.trim(),
-        notes: document.getElementById('notes').value.trim()
-    };
-
-    fetch(SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).then(() => showSuccess(payload)).catch(() => showSuccess(payload));
   }
+  if (d.dish)  html += '<strong>預計帶的菜：</strong>' + d.dish + '<br>';
+  if (d.notes) html += '<strong>備註：</strong>' + d.notes;
 
-  function showSuccess(d) {
-    let html = '<strong>姓名：</strong>' + d.name + '　<strong>區：</strong>' + d.district + '　' + (d.hostAttend?'出席':'') + '　' + (d.hostMeal?'用餐':'') + '<br>';
-    if (d.guest1name) html += '<strong>受邀人一：</strong>' + d.guest1name + '　' + (d.guest1type||'') + '　' + d.guest1age + '　' + (d.guest1attend?'出席':'') + '　' + (d.guest1meal?'用餐':'') + '<br>';
-    if (d.guest2name) html += '<strong>受邀人二：</strong>' + d.guest2name + '　' + (d.guest2type||'') + '　' + d.guest2age + '　' + (d.guest2attend?'出席':'') + '　' + (d.guest2meal?'用餐':'') + '<br>';
-    if (d.guest3name) html += '<strong>受邀人三：</strong>' + d.guest3name + '　' + (d.guest3type||'') + '　' + d.guest3age + '　' + (d.guest3attend?'出席':'') + '　' + (d.guest3meal?'用餐':'') + '<br>';
-    if (d.guest4name) html += '<strong>受邀人三：</strong>' + d.guest4name + '　' + (d.guest4type||'') + '　' + d.guest4age + '　' + (d.guest4attend?'出席':'') + '　' + (d.guest4meal?'用餐':'') + '<br>';
-    if (d.guest5name) html += '<strong>受邀人三：</strong>' + d.guest5name + '　' + (d.guest5type||'') + '　' + d.guest5age + '　' + (d.guest5attend?'出席':'') + '　' + (d.guest5meal?'用餐':'') + '<br>';
-    if (d.guest6name) html += '<strong>受邀人三：</strong>' + d.guest6name + '　' + (d.guest6type||'') + '　' + d.guest6age + '　' + (d.guest6attend?'出席':'') + '　' + (d.guest6meal?'用餐':'') + '<br>';
-    if (d.guest7name) html += '<strong>受邀人三：</strong>' + d.guest7name + '　' + (d.guest7type||'') + '　' + d.guest7age + '　' + (d.guest7attend?'出席':'') + '　' + (d.guest7meal?'用餐':'') + '<br>';
-    if (d.guest8name) html += '<strong>受邀人三：</strong>' + d.guest8name + '　' + (d.guest8type||'') + '　' + d.guest8age + '　' + (d.guest8attend?'出席':'') + '　' + (d.guest8meal?'用餐':'') + '<br>';
-    if (d.dish) html += '<strong>預計帶的菜：</strong>' + d.dish + '<br>';
-    if (d.notes) html += '<strong>備註：</strong>' + d.notes;
+  const editUrl = window.location.origin + window.location.pathname + buildParams(d);
+  document.getElementById('editLink').textContent = editUrl;
+  document.getElementById('editLink').setAttribute('data-url', editUrl);
 
-    const editUrl = window.location.origin + window.location.pathname + buildParams(d);
-    document.getElementById('editLink').textContent = editUrl;
-    document.getElementById('editLink').setAttribute('data-url', editUrl);
+  document.getElementById('formCard').style.display   = 'none';
+  document.getElementById('submitWrap').style.display = 'none';
+  document.getElementById('successDetail').innerHTML  = html;
+  document.getElementById('successCard').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-    document.getElementById('formCard').style.display = 'none';
-    document.getElementById('submitWrap').style.display = 'none';
-    document.getElementById('successDetail').innerHTML = html;
-    document.getElementById('successCard').classList.add('show');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+// ── 修改連結 ──────────────────────────────────────────────
+
+function buildParams(d) {
+  let p = '?name=' + enc(d.name) +
+          '&district=' + enc(d.district) +
+          '&hostAttend=' + (d.hostAttend ? '1' : '0') +
+          '&hostMeal='   + (d.hostMeal   ? '1' : '0') +
+          '&guestCount=' + (d.guestCount || 0) +
+          '&dish='  + enc(d.dish) +
+          '&notes=' + enc(d.notes);
+  for (let n = 1; n <= (d.guestCount || 0); n++) {
+    p += '&g' + n + 'name='   + enc(d['guest' + n + 'name']) +
+         '&g' + n + 'type='   + enc(d['guest' + n + 'type']) +
+         '&g' + n + 'age='    + enc(d['guest' + n + 'age']) +
+         '&g' + n + 'attend=' + (d['guest' + n + 'attend'] ? '1' : '0') +
+         '&g' + n + 'meal='   + (d['guest' + n + 'meal']   ? '1' : '0');
   }
+  return p;
+}
+function enc(v) { return encodeURIComponent(v || ''); }
 
-  function copyLink() {
-    const url = document.getElementById('editLink').getAttribute('data-url');
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(url).then(() => {
-        const btn = document.querySelector('.copy-btn');
-        btn.textContent = '✅ 已複製！';
-        setTimeout(() => btn.textContent = '複製修改連結', 2000);
-      });
-    } else {
-      const ta = document.createElement('textarea');
-      ta.value = url; document.body.appendChild(ta); ta.select();
-      document.execCommand('copy'); document.body.removeChild(ta);
+function copyLink() {
+  const url = document.getElementById('editLink').getAttribute('data-url');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => {
       const btn = document.querySelector('.copy-btn');
       btn.textContent = '✅ 已複製！';
       setTimeout(() => btn.textContent = '複製修改連結', 2000);
-    }
-  }
-
-  function resetForm() {
-    document.getElementById('name').value = '';
-    document.getElementById('dish').value = '';
-    document.getElementById('notes').value = '';
-    document.getElementById('hostAttend').checked = false;
-    document.getElementById('hostMeal').checked = false;
-    [1,2,3].forEach(n => {
-      document.getElementById('g'+n+'name').value = '';
-      document.getElementById('g'+n+'age').value = '';
-      document.getElementById('g'+n+'attend').checked = false;
-      document.getElementById('g'+n+'meal').checked = false;
     });
-    Object.keys(sel).forEach(k => delete sel[k]);
-    document.querySelectorAll('.chip').forEach(c => c.classList.remove('on','err-border'));
-    document.querySelectorAll('.err-msg').forEach(e => e.classList.remove('show'));
-    document.querySelectorAll('.input').forEach(i => i.classList.remove('err'));
-    document.getElementById('formCard').style.display = 'block';
-    document.getElementById('submitWrap').style.display = 'block';
-    document.getElementById('submitBtn').disabled = false;
-    document.getElementById('submitBtn').textContent = '✅ 送出報名';
-    document.getElementById('successCard').classList.remove('show');
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = url; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✅ 已複製！';
+    setTimeout(() => btn.textContent = '複製修改連結', 2000);
   }
+}
 
-  
-// === 邀約人自動完成 ===
+// ── 重置 ──────────────────────────────────────────────────
+
+function resetForm() {
+  document.getElementById('name').value  = '';
+  document.getElementById('dish').value  = '';
+  document.getElementById('notes').value = '';
+  document.getElementById('hostAttend').checked = false;
+  document.getElementById('hostMeal').checked   = false;
+
+  document.querySelectorAll('#districtGroup .chip').forEach(c => c.classList.remove('on', 'err-border'));
+  delete sel['districtGroup'];
+
+  // Rebuild with 1 empty guest section
+  const container = document.getElementById('guestContainer');
+  container.innerHTML = '';
+  guestCount = 0;
+  Object.keys(sel).forEach(k => { if (k.startsWith('g') && k.endsWith('type')) delete sel[k]; });
+  ensureGuestCount(1);
+
+  document.querySelectorAll('.err-msg').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('.input').forEach(i => i.classList.remove('err'));
+
+  document.getElementById('formCard').style.display   = 'block';
+  document.getElementById('submitWrap').style.display = 'block';
+  document.getElementById('submitBtn').disabled = false;
+  document.getElementById('submitBtn').textContent = '✅ 送出報名';
+  document.getElementById('successCard').classList.remove('show');
+}
+
+// ── 邀約人自動完成 ────────────────────────────────────────
+
 let acTimer = null;
 
 function onInviterInput(val) {
@@ -696,10 +517,7 @@ function hideDropdown() {
   const dd = document.getElementById('acDropdown');
   if (dd) dd.classList.remove('show');
 }
-
-function hideDropdownDelay() {
-  setTimeout(hideDropdown, 200);
-}
+function hideDropdownDelay() { setTimeout(hideDropdown, 200); }
 
 function selectInviter(name) {
   document.getElementById('name').value = name;
@@ -713,43 +531,57 @@ function selectInviter(name) {
 function addAndSelectInviter(name) {
   document.getElementById('name').value = name;
   hideDropdown();
-  fetch(SCRIPT_URL + '?action=addInviter&name=' + encodeURIComponent(name))
-    .catch(() => {});
+  fetch(SCRIPT_URL + '?action=addInviter&name=' + encodeURIComponent(name)).catch(() => {});
 }
 
-function fillGuests(guests) {
-  [1,2,3,4,5,6,7,8].forEach(n => {
-    const nameEl = document.getElementById('g'+n+'name');
-    const ageEl = document.getElementById('g'+n+'age');
-    if (nameEl) nameEl.value = '';
-    if (ageEl) ageEl.value = '';
-    document.querySelectorAll('#g'+n+'type .chip').forEach(c => c.classList.remove('on'));
-    delete sel['g'+n+'type'];
-  });
-  guests.forEach((g, i) => {
-    if (i >= 8) return;
-    const n = i + 1;
-    const nameEl = document.getElementById('g'+n+'name');
-    const ageEl = document.getElementById('g'+n+'age');
-    if (nameEl) nameEl.value = g.name || '';
-    if (ageEl && g.age) ageEl.value = g.age;
-  });
-}
+document.getElementById('name').addEventListener('input', function () {
+  this.classList.remove('err');
+  document.getElementById('nameErr').classList.remove('show');
+});
 
+// ── 從 URL 載入（修改模式） ───────────────────────────────
 
-document.getElementById('name').addEventListener('input', function() {
-    this.classList.remove('err');
-    document.getElementById('nameErr').classList.remove('show');
-  });
+window.addEventListener('DOMContentLoaded', () => {
+  // 初始化一組空白受邀人
+  ensureGuestCount(1);
+
+  const p = new URLSearchParams(window.location.search);
+  if (!p.get('name')) return;
+
+  document.getElementById('name').value  = p.get('name')  || '';
+  document.getElementById('notes').value = p.get('notes') || '';
+  document.getElementById('dish').value  = p.get('dish')  || '';
+  document.getElementById('hostAttend').checked = p.get('hostAttend') === '1';
+  document.getElementById('hostMeal').checked   = p.get('hostMeal')   === '1';
+
+  const dc = document.querySelector('#districtGroup .chip[data-val="' + p.get('district') + '"]');
+  if (dc) pick(dc, 'districtGroup', 'districtErr');
+
+  const count = parseInt(p.get('guestCount')) || 0;
+  // Clear default 1 section and rebuild
+  document.getElementById('guestContainer').innerHTML = '';
+  guestCount = 0;
+  ensureGuestCount(Math.max(1, count));
+
+  for (let n = 1; n <= count; n++) {
+    const nameEl   = document.getElementById('g' + n + 'name');
+    const ageEl    = document.getElementById('g' + n + 'age');
+    const attendEl = document.getElementById('g' + n + 'attend');
+    const mealEl   = document.getElementById('g' + n + 'meal');
+    if (nameEl)   nameEl.value     = p.get('g' + n + 'name')   || '';
+    if (ageEl)    ageEl.value      = p.get('g' + n + 'age')    || '';
+    if (attendEl) attendEl.checked = p.get('g' + n + 'attend') === '1';
+    if (mealEl)   mealEl.checked   = p.get('g' + n + 'meal')   === '1';
+    const tc = document.querySelector('#g' + n + 'type .chip[data-val="' + p.get('g' + n + 'type') + '"]');
+    if (tc) pick(tc, 'g' + n + 'type', null);
+  }
+});
 </script>
 
-
-
 <script>
-// 動態載入活動資訊 from Google Apps Script Web App
-(function() {
-  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbySK98XcqOfc75QweLOI0p0dxTHa0cLvus4oZqv09vaSbrRrdKS0QR7B22WYd_yqlERYA/exec';
-  fetch(WEB_APP_URL + '?action=eventInfo')
+// 動態載入活動資訊
+(function () {
+  fetch(SCRIPT_URL + '?action=eventInfo')
     .then(r => r.json())
     .then(info => {
       if (info.name) {
@@ -760,20 +592,15 @@ document.getElementById('name').addEventListener('input', function() {
         if (et) et.textContent = info.name;
       }
       const es = document.getElementById('eventSlogan');
-        if (es) {
-          if (info.slogan) {
-            es.textContent = info.slogan;
-            es.style.display = '';
-          } else {
-            es.style.display = 'none';
-          }
-        }
+      if (es) {
+        if (info.slogan) { es.textContent = info.slogan; es.style.display = ''; }
+        else { es.style.display = 'none'; }
+      }
       if (info.fullDate) {
         const ed = document.getElementById('eventDate');
         if (ed) ed.textContent = '📅 ' + info.fullDate;
         const hs = document.getElementById('headerSub');
-        // Extract month-day from fullDate (e.g. "2026年6月21日（日）" → "6月21日")
-        const m = info.fullDate.match(/(d+月d+日)/);
+        const m = info.fullDate.match(/(\d+月\d+日)/);
         if (hs && m) hs.textContent = m[1] + ' · 線上報名系統';
       }
       if (info.location) {
@@ -785,7 +612,7 @@ document.getElementById('name').addEventListener('input', function() {
         if (etm) { etm.textContent = '🕐 ' + info.time; etm.style.display = ''; }
       }
     })
-    .catch(() => { /* 若載入失敗，保留預設內容 */ });
+    .catch(() => {});
 })();
 </script>
 </body></html>
