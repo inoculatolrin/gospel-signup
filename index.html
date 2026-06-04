@@ -66,6 +66,15 @@
   @keyframes pop { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   .fade { animation: fadeUp 0.4s ease both; }
+/* === 邀約人自動完成 === */
+.ac-wrap { position: relative; }
+.ac-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1.5px solid var(--green); border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); z-index: 200; max-height: 220px; overflow-y: auto; display: none; }
+.ac-dropdown.show { display: block; }
+.ac-item { padding: 11px 14px; font-size: 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0; color: #333; }
+.ac-item:last-child { border-bottom: none; }
+.ac-item:hover, .ac-item.focused { background: #f0fff5; color: var(--dark-green); font-weight: 500; }
+.ac-item.new-item { color: #888; font-style: italic; }
+.ac-item.new-item span { color: var(--green); font-style: normal; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -106,7 +115,10 @@
 
     <div class="field">
       <div class="label">姓名（邀約人）<span class="req">*</span></div>
-      <input class="input" id="name" type="text" placeholder="請輸入您的姓名" maxlength="20">
+      <div class="ac-wrap">
+  <input class="input" id="name" type="text" placeholder="請輸入您的姓名" maxlength="20" autocomplete="off" oninput="onInviterInput(this.value)" onblur="hideDropdownDelay()">
+  <div class="ac-dropdown" id="acDropdown"></div>
+</div>
       <div class="err-msg" id="nameErr">請填寫姓名</div>
     </div>
 
@@ -642,7 +654,90 @@
     document.getElementById('successCard').classList.remove('show');
   }
 
-  document.getElementById('name').addEventListener('input', function() {
+  
+// === 邀約人自動完成 ===
+let acTimer = null;
+
+function onInviterInput(val) {
+  clearTimeout(acTimer);
+  if (!val.trim()) { hideDropdown(); return; }
+  acTimer = setTimeout(() => fetchInviterList(val.trim()), 300);
+}
+
+function fetchInviterList(query) {
+  fetch(SCRIPT_URL + '?action=inviterList&query=' + encodeURIComponent(query))
+    .then(r => r.json())
+    .then(d => showDropdown(d.list || [], query))
+    .catch(() => {});
+}
+
+function showDropdown(list, query) {
+  const dd = document.getElementById('acDropdown');
+  dd.innerHTML = '';
+  list.forEach(name => {
+    const item = document.createElement('div');
+    item.className = 'ac-item';
+    item.textContent = name;
+    item.onmousedown = (e) => { e.preventDefault(); selectInviter(name); };
+    dd.appendChild(item);
+  });
+  const exact = list.some(n => n === query);
+  if (!exact && query) {
+    const item = document.createElement('div');
+    item.className = 'ac-item new-item';
+    item.innerHTML = '➕ 新增邀約人：<span>' + query + '</span>';
+    item.onmousedown = (e) => { e.preventDefault(); addAndSelectInviter(query); };
+    dd.appendChild(item);
+  }
+  dd.classList.toggle('show', dd.children.length > 0);
+}
+
+function hideDropdown() {
+  const dd = document.getElementById('acDropdown');
+  if (dd) dd.classList.remove('show');
+}
+
+function hideDropdownDelay() {
+  setTimeout(hideDropdown, 200);
+}
+
+function selectInviter(name) {
+  document.getElementById('name').value = name;
+  hideDropdown();
+  fetch(SCRIPT_URL + '?action=guestsByInviter&inviter=' + encodeURIComponent(name))
+    .then(r => r.json())
+    .then(d => fillGuests(d.guests || []))
+    .catch(() => {});
+}
+
+function addAndSelectInviter(name) {
+  document.getElementById('name').value = name;
+  hideDropdown();
+  fetch(SCRIPT_URL + '?action=addInviter&name=' + encodeURIComponent(name))
+    .catch(() => {});
+}
+
+function fillGuests(guests) {
+  [1,2,3,4,5,6,7,8].forEach(n => {
+    const nameEl = document.getElementById('g'+n+'name');
+    const ageEl = document.getElementById('g'+n+'age');
+    if (nameEl) nameEl.value = '';
+    if (ageEl) ageEl.value = '';
+    document.querySelectorAll('#g'+n+'type .chip').forEach(c => c.classList.remove('on'));
+    delete sel['g'+n+'type'];
+  });
+  guests.forEach((g, i) => {
+    if (i >= 8) return;
+    const n = i + 1;
+    const nameEl = document.getElementById('g'+n+'name');
+    const ageEl = document.getElementById('g'+n+'age');
+    if (nameEl) nameEl.value = g.name || '';
+    if (ageEl && g.age) ageEl.value = g.age;
+  });
+}
+
+
+document.getElementById('name').addEventListener('input', function() {
     this.classList.remove('err');
     document.getElementById('nameErr').classList.remove('show');
   });
