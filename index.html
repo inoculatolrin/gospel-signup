@@ -380,7 +380,25 @@ function submitForm() {
     payload['guest' + n + 'meal']   = document.getElementById('g' + n + 'meal')?.checked  || false;
   }
 
-  fetch(SCRIPT_URL, {
+  // 修改模式：帶入原記錄行號（後端用於 UPDATE）
+  payload.editRowIndex = editMode ? editRowIndex : null;
+
+  // 偵測新受邀人（不在 DB 快取中的），送出後回寫 DB
+  const dbGuests = guestCache[currentInviter] || [];
+  const dbNames  = new Set(dbGuests.map(g => g.name));
+  const newGuests = [];
+  for (let n = 1; n <= guestCount; n++) {
+    const gname = payload['guest' + n + 'name'];
+    const gtype = payload['guest' + n + 'type'];
+    const gage  = payload['guest' + n + 'age'];
+    if (gname && !dbNames.has(gname)) {
+      newGuests.push({ name: gname, type: gtype || '', age: gage || '' });
+    }
+  }
+  payload.newGuests = newGuests;
+
+  // 送往我們自己的 FRIEND_URL（支援 UPDATE + DB 回寫）
+  fetch(FRIEND_URL, {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
@@ -489,8 +507,11 @@ function resetForm() {
 
 // ── 邀約人自動完成 ────────────────────────────────────────
 
-let inviterCache = null;  // 邀約人名單快取
-const guestCache = {};    // 受邀人快取 { 邀約人名: [{name,age}] }
+let inviterCache = null;   // 邀約人名單快取
+const guestCache = {};     // 受邀人快取 { 邀約人名: [{name,age,type,district}] }
+let editMode = false;      // 是否為修改既有報名模式
+let editRowIndex = null;   // 既有報名在資料表的行號
+let currentInviter = '';   // 目前選取的邀約人
 
 function preloadInviterList() {
   // 一次 API 呼叫取回全部邀約人名單 + 受邀人（含身份、區）
@@ -562,20 +583,83 @@ function hideDropdownDelay() { setTimeout(hideDropdown, 200); }
 
 function selectInviter(name) {
   document.getElementById('name').value = name;
+  currentInviter = name;
   hideDropdown();
-  if (guestCache[name] !== undefined) {
-    // 快取命中，即時顯示
-    fillGuests(guestCache[name]);
-  } else {
-    // 快取尚未備妥（通常在頁面剛載入幾秒內），fallback 到 API
-    fetch(SCRIPT_URL + '?action=guestsByInviter&inviter=' + encodeURIComponent(name))
-      .then(r => r.json())
-      .then(d => {
-        guestCache[name] = d.guests || [];
-        fillGuests(guestCache[name]);
-      })
-      .catch(() => {});
+
+  // Phase 1：先查資料表是否曾填過
+  fetch(FRIEND_URL + '?action=queryByInviter&inviter=' + encodeURIComponent(name))
+    .then(r => r.json())
+    .then(d => {
+      if (d.found) {
+        // 找到既有記錄 → 修改模式
+        editMode = true;
+        editRowIndex = d.rowIndex;
+        loadFromRegistration(d);
+        showEditBanner(true);
+      } else {
+        // 未填過 → 從 DB 快取帶入基本資料（無出席用餐）
+        editMode = false;
+        editRowIndex = null;
+        showEditBanner(false);
+        fillGuests(guestCache[name] || []);
+      }
+    })
+    .catch(() => {
+      // 查詢失敗 fallback 到 DB 快取
+      editMode = false;
+      editRowIndex = null;
+      showEditBanner(false);
+      fillGuests(guestCache[name] || []);
+    });
+}
+
+// 從既有報名記錄載入（含出席/用餐）
+function loadFromRegistration(d) {
+  // 區
+  const dc = document.querySelector('#districtGroup .chip[data-val="' + d.district + '"]');
+  if (dc) pick(dc, 'districtGroup', 'districtErr');
+  // 邀約人出席/用餐
+  document.getElementById('hostAttend').checked = d.hostAttend === '出席';
+  document.getElementById('hostMeal').checked   = d.hostMeal   === '用餐';
+  // 帶菜/備註
+  document.getElementById('dish').value  = d.dish  || '';
+  document.getElementById('notes').value = d.notes || '';
+  // 受邀人
+  const container = document.getElementById('guestContainer');
+  container.innerHTML = '';
+  guestCount = 0;
+  Object.keys(sel).forEach(k => { if (k.startsWith('g') && k.endsWith('type')) delete sel[k]; });
+  const guests = d.guests || [];
+  ensureGuestCount(Math.max(1, guests.length));
+  guests.forEach((g, i) => {
+    const n = i + 1;
+    const nameEl   = document.getElementById('g' + n + 'name');
+    const ageEl    = document.getElementById('g' + n + 'age');
+    const attendEl = document.getElementById('g' + n + 'attend');
+    const mealEl   = document.getElementById('g' + n + 'meal');
+    if (nameEl)   nameEl.value     = g.name   || '';
+    if (ageEl)    ageEl.value      = g.age    || '';
+    if (attendEl) attendEl.checked = g.attend === '出席';
+    if (mealEl)   mealEl.checked   = g.meal   === '用餐';
+    if (g.type) {
+      const tc = document.querySelector('#g' + n + 'type .chip[data-val="' + g.type + '"]');
+      if (tc) pick(tc, 'g' + n + 'type', null);
+    }
+  });
+}
+
+// 顯示/隱藏「修改模式」提示橫幅
+function showEditBanner(show) {
+  let banner = document.getElementById('editBanner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'editBanner';
+    banner.style.cssText = 'background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:9px 14px;font-size:13px;color:#856404;margin-bottom:10px;';
+    const fc = document.getElementById('formCard');
+    fc.insertBefore(banner, fc.firstChild);
   }
+  banner.textContent = '✏️ 找到上次報名記錄，修改後送出即可更新';
+  banner.style.display = show ? '' : 'none';
 }
 
 function addAndSelectInviter(name) {
