@@ -766,7 +766,7 @@ window.addEventListener('DOMContentLoaded', () => {
 <script>
 // 動態載入活動資訊
 (function () {
-  fetch(SCRIPT_URL + '?action=eventInfo')
+  fetch(FRIEND_URL + '?action=eventInfo')
     .then(r => r.json())
     .then(info => {
       if (info.name) {
