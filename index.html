@@ -15,7 +15,7 @@ body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); min-heigh
 .chat { width: 100%; max-width: 480px; padding: 14px 12px 30px; display: flex; flex-direction: column; gap: 12px; }
 .bot-row { display: flex; align-items: flex-end; gap: 8px; }
 .bot-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.bubble { background: white; border-radius: 18px 18px 18px 4px; padding: 14px 16px; max-width: 82%; box-shadow: var(--shadow); font-size: 15px; line-height: 1.7; color: var(--text); }
+.bubble { background: white; border-radius: 18px 18px 18px 4px; padding: 14px 16px; flex: 1; box-shadow: var(--shadow); font-size: 15px; line-height: 1.7; color: var(--text); }
 .event-tag { font-size: 12px; font-weight: 700; color: var(--green); letter-spacing: 1px; margin-bottom: 4px; }
 .event-title { font-size: 17px; font-weight: 900; color: #111; line-height: 1.4; margin-bottom: 8px; }
 .event-slogan { font-size: 20px; font-weight: 900; color: var(--dark-green); margin-bottom: 10px; }
@@ -779,11 +779,21 @@ window.addEventListener('DOMContentLoaded', () => {
         else { es.style.display = 'none'; }
       }
       if (info.fullDate) {
+        // Parse date — may be ISO string (e.g. 2026-06-20T16:00:00.000Z) or formatted string
+        let dateLabel = info.fullDate;
+        const isoMatch = info.fullDate.match(/^\d{4}-\d{2}-\d{2}T/);
+        if (isoMatch) {
+          const d = new Date(info.fullDate);
+          dateLabel = d.getFullYear() + '/' + (d.getMonth()+1) + '/' + d.getDate();
+        }
         const ed = document.getElementById('eventDate');
-        if (ed) ed.textContent = '📅 ' + info.fullDate;
+        if (ed) ed.textContent = '📅 ' + dateLabel;
         const hs = document.getElementById('headerSub');
-        const m = info.fullDate.match(/(\d+月\d+日)/);
-        if (hs && m) hs.textContent = m[1] + ' · 線上報名系統';
+        // Try "月日" pattern first, else try "YYYY/M/D" or "YYYY/MM/DD"
+        const m1 = dateLabel.match(/(\d+月\d+日)/);
+        const m2 = dateLabel.match(/\d+\/(\d+)\/(\d+)/);
+        if (hs && m1) hs.textContent = m1[1] + ' · 線上報名系統';
+        else if (hs && m2) hs.textContent = m2[1] + '月' + m2[2] + '日 · 線上報名系統';
       }
       if (info.location) {
         const el = document.getElementById('eventLocation');
