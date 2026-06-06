@@ -285,19 +285,25 @@ function pick(chip, groupId, errId) {
   if (errId) document.getElementById(errId).classList.remove('show');
 }
 
-// ── 查詢舊資料 ────────────────────────────────────────────
+// ── 查詢舊資料（統一走 FRIEND_URL，同步設定 editMode）────────
 
 function queryRecord() {
   const qname = document.getElementById('queryName').value.trim();
   const msg = document.getElementById('queryMsg');
   if (!qname) { msg.style.display = 'block'; msg.style.color = 'var(--red)'; msg.textContent = '請輸入姓名'; return; }
   msg.style.display = 'block'; msg.style.color = '#999'; msg.textContent = '查詢中…';
-  fetch(SCRIPT_URL + '?name=' + encodeURIComponent(qname))
+  fetch(FRIEND_URL + '?action=queryByInviter&inviter=' + encodeURIComponent(qname))
     .then(r => r.json())
     .then(d => {
       if (d.found) {
         msg.style.color = 'var(--green)'; msg.textContent = '✅ 找到資料，已帶入表單！';
-        loadData(d);
+        // 設定編輯模式（讓送出時走更新而非新增）
+        currentInviter = d.name || qname;
+        document.getElementById('name').value = currentInviter;
+        editMode = true;
+        editRowIndex = d.rowIndex;
+        loadFromRegistration(d);
+        showEditBanner(true);
       } else {
         msg.style.color = 'var(--red)'; msg.textContent = '❌ 找不到「' + qname + '」的報名記錄';
       }
@@ -446,7 +452,8 @@ function buildParams(d) {
           '&hostMeal='   + (d.hostMeal   ? '1' : '0') +
           '&guestCount=' + (d.guestCount || 0) +
           '&dish='  + enc(d.dish) +
-          '&notes=' + enc(d.notes);
+          '&notes=' + enc(d.notes) +
+          (d.editRowIndex ? '&rowIndex=' + d.editRowIndex : '');
   for (let n = 1; n <= (d.guestCount || 0); n++) {
     p += '&g' + n + 'name='   + enc(d['guest' + n + 'name']) +
          '&g' + n + 'type='   + enc(d['guest' + n + 'type']) +
@@ -568,7 +575,11 @@ function showDropdown(list, query) {
   if (!exact && query) {
     const item = document.createElement('div');
     item.className = 'ac-item new-item';
-    item.innerHTML = '➕ 新增邀約人：<span>' + query + '</span>';
+    // 安全：用 textContent + DOM 組合，避免 XSS
+    item.textContent = '➕ 新增邀約人：';
+    const sp = document.createElement('span');
+    sp.textContent = query;
+    item.appendChild(sp);
     item.onmousedown = (e) => { e.preventDefault(); addAndSelectInviter(query); };
     dd.appendChild(item);
   }
@@ -663,9 +674,13 @@ function showEditBanner(show) {
 }
 
 function addAndSelectInviter(name) {
+  // 只設定名字，不立即寫入 DB（送出時由 syncNewGuestsToDB_ 處理）
   document.getElementById('name').value = name;
+  currentInviter = name;
+  editMode = false;
+  editRowIndex = null;
+  showEditBanner(false);
   hideDropdown();
-  fetch(SCRIPT_URL + '?action=addInviter&name=' + encodeURIComponent(name)).catch(() => {});
 }
 
 document.getElementById('name').addEventListener('input', function () {
@@ -684,7 +699,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const p = new URLSearchParams(window.location.search);
   if (!p.get('name')) return;
 
-  document.getElementById('name').value  = p.get('name')  || '';
+  const urlName = p.get('name') || '';
+  document.getElementById('name').value  = urlName;
   document.getElementById('notes').value = p.get('notes') || '';
   document.getElementById('dish').value  = p.get('dish')  || '';
   document.getElementById('hostAttend').checked = p.get('hostAttend') === '1';
@@ -693,8 +709,14 @@ window.addEventListener('DOMContentLoaded', () => {
   const dc = document.querySelector('#districtGroup .chip[data-val="' + p.get('district') + '"]');
   if (dc) pick(dc, 'districtGroup', 'districtErr');
 
-  const count = parseInt(p.get('guestCount')) || 0;
-  // Clear default 1 section and rebuild
+  // 推算 guestCount：優先用 URL 參數，舊連結則推算非空的受邀人組數
+  let count = parseInt(p.get('guestCount')) || 0;
+  if (!count) {
+    for (let n = 1; n <= 20; n++) {
+      if (p.get('g' + n + 'name')) count = n; else break;
+    }
+  }
+
   document.getElementById('guestContainer').innerHTML = '';
   guestCount = 0;
   ensureGuestCount(Math.max(1, count));
@@ -710,6 +732,30 @@ window.addEventListener('DOMContentLoaded', () => {
     if (mealEl)   mealEl.checked   = p.get('g' + n + 'meal')   === '1';
     const tc = document.querySelector('#g' + n + 'type .chip[data-val="' + p.get('g' + n + 'type') + '"]');
     if (tc) pick(tc, 'g' + n + 'type', null);
+  }
+
+  // 若 URL 含 rowIndex（新格式連結），進入更新模式
+  const urlRowIndex = parseInt(p.get('rowIndex'));
+  if (urlRowIndex && urlRowIndex >= 2) {
+    currentInviter = urlName;
+    editMode = true;
+    editRowIndex = urlRowIndex;
+    showEditBanner(true);
+  } else {
+    // 舊格式連結：以邀約人姓名查詢資料表確認是否有記錄
+    if (urlName) {
+      fetch(FRIEND_URL + '?action=queryByInviter&inviter=' + encodeURIComponent(urlName))
+        .then(r => r.json())
+        .then(d => {
+          if (d.found) {
+            currentInviter = urlName;
+            editMode = true;
+            editRowIndex = d.rowIndex;
+            showEditBanner(true);
+          }
+        })
+        .catch(() => {});
+    }
   }
 });
 </script>
