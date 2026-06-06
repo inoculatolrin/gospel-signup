@@ -809,7 +809,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const remarkText = info.Remark || info.remark || '';
       if (remarkText) {
         const rn = document.getElementById('remarkNote');
-        if (rn) { rn.textContent = remarkText; rn.style.display = ''; }
+        if (rn) { rn.textContent = remarkText; rn.style.display = 'block'; }
       }
     })
     .catch(() => {});
