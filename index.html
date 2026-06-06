@@ -76,6 +76,7 @@ select.input { appearance: none; -webkit-appearance: none; background-image: url
 .ac-item:hover, .ac-item.focused { background: #f0fff5; color: var(--dark-green); font-weight: 500; }
 .ac-item.new-item { color: #888; font-style: italic; }
 .ac-item.new-item span { color: var(--green); font-style: normal; font-weight: 700; }
+.remark-note { background: #f0fff5; border-left: 3px solid var(--green); border-radius: 8px; padding: 11px 14px; margin-left: 44px; font-size: 13px; color: #444; line-height: 1.8; display: none; }
 </style>
 </head>
 <body>
@@ -100,6 +101,8 @@ select.input { appearance: none; -webkit-appearance: none; background-image: url
       <div class="event-date" id="eventTime" style="display:none"></div>
     </div>
   </div>
+
+  <div class="remark-note fade" id="remarkNote"></div>
 
   <div class="divider">── 報名表 ──</div>
 
@@ -158,7 +161,7 @@ select.input { appearance: none; -webkit-appearance: none; background-image: url
     <!-- 帶菜/備註 -->
     <div class="field">
       <div class="label">預計帶的菜</div>
-      <input class="input" id="dish" type="text" placeholder="（選填）例：炲飯、水果..." maxlength="50">
+      <input class="input" id="dish" type="text" placeholder="（選填）例：炒飯、水果、滷味、甜點.." maxlength="50">
     </div>
     <div class="field" style="margin-bottom:0">
       <div class="label">備註</div>
@@ -802,6 +805,11 @@ window.addEventListener('DOMContentLoaded', () => {
       if (info.time) {
         const etm = document.getElementById('eventTime');
         if (etm) { etm.textContent = '🕐 ' + info.time; etm.style.display = ''; }
+      }
+      const remarkText = info.Remark || info.remark || '';
+      if (remarkText) {
+        const rn = document.getElementById('remarkNote');
+        if (rn) { rn.textContent = remarkText; rn.style.display = ''; }
       }
     })
     .catch(() => {});
