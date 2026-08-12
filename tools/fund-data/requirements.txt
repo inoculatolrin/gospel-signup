@@ -1,0 +1,2 @@
+# 僅 PDF 解析需要；沒安裝時會改用系統的 pdftotext（poppler-utils）
+pypdf>=4.0
